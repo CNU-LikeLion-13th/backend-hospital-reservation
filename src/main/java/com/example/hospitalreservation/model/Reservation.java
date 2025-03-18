@@ -20,4 +20,20 @@ public class Reservation {
         this.patientId = patientId;
         this.reservationTime = reservationTime;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
+    }
 }
