@@ -22,7 +22,7 @@ public class ReservationController {
         List<Reservation> reservations = reservationService.getAllReservations();
         model.addAttribute("reservations",reservations);
 
-        return "ok";
+        return "index.html";
     }
 
     @GetMapping("/reservation_form")
