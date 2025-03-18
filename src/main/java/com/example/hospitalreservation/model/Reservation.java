@@ -36,4 +36,8 @@ public class Reservation {
     public LocalDateTime getReservationTime() {
         return reservationTime;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
