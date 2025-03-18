@@ -1,22 +1,30 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.model.Reservation;
+import com.example.hospitalreservation.service.ReservationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class ReservationController {
 
-    // TODO : 주입 받아야 할 객체를 설정해주세요.
+    private final ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @GetMapping("/reservations")
     public String getReservations(Model model) {
-        // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
-        // TODO : 예약 목록을 가져오는 코드 작성
-        return "index.html";
+        List<Reservation> reservations = reservationService.getAllReservations();
+        model.addAttribute("reservations",reservations);
+
+        return "ok";
     }
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
     @GetMapping("/reservation_form")
     public String showReservationForm() {
         return "reservation_form.html";
