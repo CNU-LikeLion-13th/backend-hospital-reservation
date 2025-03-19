@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
+@RequestMapping("/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -18,7 +19,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/reservations")
+    @GetMapping
     public String getReservations(Model model) {
         List<Reservation> reservations = reservationService.getAllReservations();
         model.addAttribute("reservations",reservations);
@@ -26,12 +27,12 @@ public class ReservationController {
         return "index.html";
     }
 
-    @GetMapping("/reservations/new")
+    @GetMapping("/new")
     public String showReservationForm() {
         return "reservation_form.html";
     }
 
-    @PostMapping("/reservations")
+    @PostMapping
     public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
         reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
         return "redirect:/reservations";
