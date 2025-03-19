@@ -26,8 +26,7 @@ public class ReservationService {
         return reservationRepository.save(newReservation);
     }
 
-    // TODO : 예약을 취소하는 코드를 작성해주세요.
     public void cancelReservation(Long id) {
-        return;
+        reservationRepository.deleteById(id);
     }
 }
