@@ -3,14 +3,13 @@ package com.example.hospitalreservation.model;
 import java.time.LocalDateTime;
 
 public class Reservation {
-    private static long ID_SEQ = 1;
     private Long id;
     private Long doctorId;
     private Long patientId;
     private LocalDateTime reservationTime;
 
+
     private Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        this.id = ID_SEQ++;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.reservationTime = reservationTime;
@@ -22,6 +21,10 @@ public class Reservation {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getDoctorId() {
