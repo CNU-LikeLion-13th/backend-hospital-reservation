@@ -23,12 +23,12 @@ public class ReservationService {
 
     // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        if (doctorId < 0) {
-            throw new IllegalArgumentException("ID 값은 음수가 될 수 없습니다. ID: %d".formatted(doctorId));
+        if (doctorId <= 0) {
+            throw new IllegalArgumentException("ID 값은 0 또는 음수가 될 수 없습니다. ID: %d".formatted(doctorId));
         }
 
-        if (patientId < 0) {
-            throw new IllegalArgumentException("ID 값은 음수가 될 수 없습니다. ID: %d".formatted(patientId));
+        if (patientId <= 0) {
+            throw new IllegalArgumentException("ID 값은 0 또는 음수가 될 수 없습니다. ID: %d".formatted(patientId));
         }
 
         Reservation reservation = new Reservation(null, doctorId, patientId, reservationTime);
