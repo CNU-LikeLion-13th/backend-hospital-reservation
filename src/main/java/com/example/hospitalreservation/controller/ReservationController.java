@@ -22,7 +22,7 @@ public class ReservationController {
 
     @GetMapping("/new")
     public String showReservationForm() {
-        return null;
+        return "reservation_form";
     }
 
     @PostMapping
