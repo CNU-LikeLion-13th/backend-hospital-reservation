@@ -1,10 +1,14 @@
 package com.example.hospitalreservation.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 // TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
 // TODO : 요청 경로는 templates를 참고하여 작성해주세요.
+
+@Controller
+@RequestMapping("/reservations")
 public class ReservationController {
 
     // TODO : 주입 받아야 할 객체를 설정해주세요. (종속성을 직접 넣어준다...?)
