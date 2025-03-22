@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 // TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
 // TODO : 요청 경로는 templates를 참고하여 작성해주세요.
 
@@ -34,14 +36,18 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
+    @PostMapping
     public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
-        return null;
+        reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
+        return "redirect:/reservations";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
+    @PostMapping("/delete/{id}")
     public String cancelReservation(@PathVariable Long id) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
-        return null;
+        reservationService.cancelReservation(id);
+        return "redirect:/reservations";
     }
 }
