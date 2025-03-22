@@ -27,8 +27,8 @@ public class ReservationController {
 
     @PostMapping
     public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
-        // TODO : 예약을 진행하는 코드를 작성해주세요.
-        return null;
+        reservationService.createReservation(doctorId, patientId);
+        return "redirect:/reservations";
     }
 
     @PostMapping("/delete/{id}")
