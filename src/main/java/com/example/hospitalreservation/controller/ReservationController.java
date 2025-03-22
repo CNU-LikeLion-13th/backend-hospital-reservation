@@ -33,7 +33,7 @@ public class ReservationController {
 
     @PostMapping("/delete/{id}")
     public String cancelReservation(@PathVariable Long id) {
-        // TODO : 예약을 취소하는 코드를 작성해주세요.
-        return null;
+        reservationService.cancelReservation(id);
+        return "redirect:/reservations";
     }
 }
