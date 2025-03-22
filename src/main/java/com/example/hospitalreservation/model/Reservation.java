@@ -12,7 +12,33 @@ public class Reservation {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setReservationTime(LocalDateTime reservationTime) {
+        this.reservationTime = reservationTime;
+    }
+
     public Long getId(){
         return id;
+    }
+
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
     }
 }
