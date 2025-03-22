@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ReservationService {
 
-    // TODO : 주입 받아야 객체를 작성해주세요.
+    // TODO : 주입 받아야 객체를 작성해주세요
     ReservationRepository reservationRepository;
 
     public ReservationService(ReservationRepository reservationRepository) {

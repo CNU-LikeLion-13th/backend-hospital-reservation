@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.service.ReservationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +13,24 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
 
     // TODO : 주입 받아야 할 객체를 설정해주세요. (종속성을 직접 넣어준다...?)
-
-    // TODO : 필요한 어노테이션을 작성해주세요.
-    public String getReservations(Model model) {
-        // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
-        return null;
+    ReservationService reservationService;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
+    @GetMapping
+    public String getReservations(Model model) {
+        // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
+        model.addAttribute("reservations", reservationService.getAllReservations());
+        return "index";
+    }
+
+    // TODO : 필요한 어노테이션을 작성해주세요.
+    @GetMapping("/new")
     public String showReservationForm() {
         // TODO : 예약하기 페이지를 가져오는 코드를 작성해주세요.
-        return null;
+        return "reservation_form";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
