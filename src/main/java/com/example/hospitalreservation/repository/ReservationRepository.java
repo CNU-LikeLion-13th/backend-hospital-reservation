@@ -26,7 +26,6 @@ public class ReservationRepository {
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
     public void deleteById(Long id) {
-
         for(int i = reservations.size() - 1; i >= 0; i--){
             if (reservations.get(i).getId().equals(id)) {
                 reservations.remove(i);
