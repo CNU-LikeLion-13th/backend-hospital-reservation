@@ -4,6 +4,7 @@ import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -14,7 +15,7 @@ public class ReservationRepository {
 
     // TODO : 모든 예약 엔티티를 조회하는 코드를 작성해주세요.
     public List<Reservation> findAll() {
-        return new ArrayList<>(reservations);
+        return List.copyOf(reservations);
     }
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
