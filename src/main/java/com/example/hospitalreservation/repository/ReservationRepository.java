@@ -14,7 +14,10 @@ public class ReservationRepository {
 
     // TODO : 모든 예약 엔티티를 조회하는 코드를 작성해주세요.
     public List<Reservation> findAll() {
-        return null;
+
+
+        return ArrayList<>(reservations);
+
     }
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
