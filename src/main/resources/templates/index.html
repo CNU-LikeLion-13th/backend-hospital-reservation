@@ -22,7 +22,7 @@
         <td th:text="${reservation.id}"></td>
         <td th:text="${reservation.doctorId}"></td>
         <td th:text="${reservation.patientId}"></td>
-        <td th:text="${reservation.reservationTime}"></td>
+        <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
             <form th:action="@{/reservations/delete/{id}(id=${reservation.id})}" method="post">
                 <button type="submit">취소</button>
