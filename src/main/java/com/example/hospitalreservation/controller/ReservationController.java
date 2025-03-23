@@ -27,17 +27,21 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
+    @getMapping("/new")
     public String showReservationForm() {
         // TODO : 예약하기 페이지를 가져오는 코드를 작성해주세요.
 
-        return null;
+        return "resservation_form.html";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
+    @PostMapping
+    public String createReservation(RequestParam Long doctorId, @RequestParam Long patientId,
+                                    @RequestParam LocalDateTime reservationTime) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
+        reservationService.createReservation(doctorId, patientId, reservationTime);
 
-        return null;
+        return "redirect:/reservations";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.

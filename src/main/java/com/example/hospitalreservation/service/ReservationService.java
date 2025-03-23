@@ -29,7 +29,9 @@ public class ReservationService {
 
     // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        return null;
+        Reservation reservation = new Reservation(doctorId, patientId, reservationTime);
+
+        return reservationRepository.save(reservation);
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
