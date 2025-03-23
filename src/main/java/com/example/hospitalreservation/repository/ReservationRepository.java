@@ -19,7 +19,10 @@ public class ReservationRepository {
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
     public Reservation save(Reservation reservation) {
-        return null;
+        reservation.setId(nextId);
+        nextId++;
+        reservations.add(reservation);
+        return reservation;
     }
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
