@@ -8,5 +8,11 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime reservationTime;
 
-    // TODO : 필요한 메서드가 있다면 작성해주세요.
+    // TODO_w2 : 필요한 메서드가 있다면 작성해주세요.
+    public void setId(Long id){
+        this.id = id;
+    }
+    public long getId() {
+        return id;
+    }
 }
