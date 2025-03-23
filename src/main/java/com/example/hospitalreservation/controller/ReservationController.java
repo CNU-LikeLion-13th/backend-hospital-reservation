@@ -1,18 +1,30 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
-// TODO : 요청 경로는 templates를 참고하여 작성해주세요.
+// TODO_w2 : 컨트롤러에 필요한 어노테이션을 작성해주세요.
+@Controller
+@RequestMapping("/reservations")
+// TODO_w2 : 요청 경로는 templates를 참고하여 작성해주세요.
 public class ReservationController {
+    // TODO_2 : 주입 받아야 할 객체를 설정해주세요. (각 레이어끼리 서로 결합도를 낮게 하면서 ~하는게 MVC의 목적이다. DI라는 종속성을 직접 넣어준다?
+    private final ReservationService reservationService;
 
-    // TODO : 주입 받아야 할 객체를 설정해주세요.
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+    //단순히 멤버변수를 두면 된다 Spring이 의존성을 알아서 해준다??
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
+    // TODO_w2 : 필요한 어노테이션을 작성해주세요.
+    @GetMapping
     public String getReservations(Model model) {
         // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
-        return null;
+        model.addAttribute("reservations", reservationService.getAllReservations());
+        return "reservations/list";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
