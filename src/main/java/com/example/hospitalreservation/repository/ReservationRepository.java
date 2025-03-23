@@ -29,6 +29,8 @@ public class ReservationRepository {
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
     public void deleteById(Long id) {
-        return;
+
+        reservationRepository.deleteById(id);
+
     }
 }
