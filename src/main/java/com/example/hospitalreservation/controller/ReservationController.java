@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 
 // TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
@@ -36,9 +38,12 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("reservations")
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
+    public String createReservation(
+            @RequestParam Long doctorId,
+            @RequestParam Long patientId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationTime) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
-        reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
+        reservationService.createReservation(doctorId, patientId, reservationTime);
         return "redirect:/reservations";
     }
 
