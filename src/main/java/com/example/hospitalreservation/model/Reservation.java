@@ -15,4 +15,25 @@ public class Reservation {
     public long getId() {
         return id;
     }
+
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
+    }
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setReservationTime(LocalDateTime reservationTime) {
+        this.reservationTime = reservationTime;
+    }
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
+    }
 }
