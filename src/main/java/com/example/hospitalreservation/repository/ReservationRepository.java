@@ -38,7 +38,7 @@ public class ReservationRepository {
             Reservation reservation= iterator.next();
             if(reservation.getId().equals(id)){
                 iterator.remove();
-                break;
+                return;
             }
         }
     }
