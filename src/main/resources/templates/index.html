@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>진료 예약 목록</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>진료 예약 목록</h1>
@@ -24,7 +24,7 @@
         <td th:text="${reservation.patientId}"></td>
         <td th:text="${reservation.reservationTime}"></td>
         <td>
-            <form th:action="@{/reservations/delete/{id}(id=${reservation.id})}" method="post">
+            <form method="post" th:action="@{/reservations/delete/{id}(id=${reservation.id})}">
                 <button type="submit">취소</button>
             </form>
         </td>
