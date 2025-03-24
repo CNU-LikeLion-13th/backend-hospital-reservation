@@ -17,9 +17,9 @@ public class ReservationRepository {
     }
 
     public Reservation save(Reservation reservation) {
-        reservation.setId(nextId++);
-        reservations.add(reservation);
-        return reservation;
+        Reservation savedReservation = new Reservation(nextId++, reservation.getDoctorId(), reservation.getPatientId(), reservation.getReservationTime());
+        reservations.add(savedReservation);
+        return savedReservation;
     }
 
     public void deleteById(Long id) {

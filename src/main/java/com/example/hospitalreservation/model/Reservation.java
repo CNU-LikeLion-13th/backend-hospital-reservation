@@ -8,19 +8,10 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime reservationTime;
 
-    public void setId(Long id) {
+    public Reservation(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.id = id;
-    }
-
-    public void setDoctorId(Long doctorId) {
         this.doctorId = doctorId;
-    }
-
-    public void setPatientId(Long patientId) {
         this.patientId = patientId;
-    }
-
-    public void setReservationTime(LocalDateTime reservationTime) {
         this.reservationTime = reservationTime;
     }
 

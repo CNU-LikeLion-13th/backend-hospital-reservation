@@ -20,10 +20,7 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Long doctorId, Long patientId) {
-        Reservation reservation = new Reservation();
-        reservation.setDoctorId(doctorId);
-        reservation.setPatientId(patientId);
-        reservation.setReservationTime(LocalDateTime.now());
+        Reservation reservation = new Reservation(null, doctorId, patientId, LocalDateTime.now());
         return reservationRepository.save(reservation);
     }
 
