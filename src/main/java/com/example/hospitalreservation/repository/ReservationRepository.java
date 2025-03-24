@@ -3,6 +3,7 @@ package com.example.hospitalreservation.repository;
 import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,8 @@ public class ReservationRepository {
     }
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
-    public Reservation save(Reservation reservation) {
-        reservation.setId(nextId);
-        nextId++;
+    public Reservation save(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        Reservation reservation = new Reservation(nextId++, doctorId, patientId, reservationTime);
         reservations.add(reservation);
         return reservation;
     }
