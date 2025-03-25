@@ -1,6 +1,5 @@
 package com.example.hospitalreservation.service;
 
-import com.example.hospitalreservation.model.Doctor;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.util.List;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
@@ -23,10 +21,15 @@ public class ReservationService {
 
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         Reservation newReservation = Reservation.of(doctorId, patientId, reservationTime);
+
+        // TODO: 의사의 시간에 포함되는가?
+        // TODO: 다른 예약과 시간이 겹치지 않는가?
+
         return reservationRepository.save(newReservation);
     }
 
     public void cancelReservation(Long id) {
+        // TODO: 취소 사유를 로그로 출력해야 한다.
         reservationRepository.deleteById(id);
     }
 }
