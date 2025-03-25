@@ -3,6 +3,7 @@ package com.example.hospitalreservation.model;
 import java.time.LocalDateTime;
 
 public class Reservation {
+
     private Long id;
     private Long doctorId;
     private Long patientId;
