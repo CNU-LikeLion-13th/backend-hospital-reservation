@@ -22,7 +22,7 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        Reservation newReservation = Reservation.of(doctorId,patientId,reservationTime);
+        Reservation newReservation = Reservation.of(doctorId, patientId, reservationTime);
         return reservationRepository.save(newReservation);
     }
 

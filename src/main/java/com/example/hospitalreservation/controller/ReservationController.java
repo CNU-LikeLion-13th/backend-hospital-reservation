@@ -22,7 +22,7 @@ public class ReservationController {
     @GetMapping
     public String getReservations(Model model) {
         List<Reservation> reservations = reservationService.getAllReservations();
-        model.addAttribute("reservations",reservations);
+        model.addAttribute("reservations", reservations);
 
         return "index.html";
     }
