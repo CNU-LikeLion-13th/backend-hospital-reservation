@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 // TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
 // TODO : 요청 경로는 templates를 참고하여 작성해주세요.
 @Controller
+@RequestMapping("/reservations")
 public class ReservationController {
 
     // TODO : 주입 받아야 할 객체를 설정해주세요.
@@ -22,7 +23,7 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @GetMapping("/reservations")
+    @GetMapping
     public String getReservations(Model model) {
         // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
         model.addAttribute("reservations", reservationService.getAllReservations());
@@ -30,14 +31,14 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @GetMapping("/reservations/new")
+    @GetMapping("/new")
     public String showReservationForm() {
         // TODO : 예약하기 페이지를 가져오는 코드를 작성해주세요.
         return "reservation_form";
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @PostMapping("reservations")
+    @PostMapping
     public String createReservation(
             @RequestParam Long doctorId,
             @RequestParam Long patientId,
@@ -48,7 +49,7 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @PostMapping("reservations/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String cancelReservation(@PathVariable Long id) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
         reservationService.cancelReservation(id);
