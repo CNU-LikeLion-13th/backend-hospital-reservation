@@ -15,8 +15,8 @@ public class Reservation {
         this.reservationTime = reservationTime;
     }
 
-    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime){
-        return new Reservation(doctorId,patientId,reservationTime);
+    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        return new Reservation(doctorId, patientId, reservationTime);
     }
 
     public Long getId() {
