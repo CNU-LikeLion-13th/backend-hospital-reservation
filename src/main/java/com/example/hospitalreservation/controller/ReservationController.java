@@ -46,7 +46,6 @@ public class ReservationController {
         if (doctorId <= 0) {
             return "nyah";
         }
-
         if (patientId <= 0) {
             return "nyah";
         }
@@ -60,7 +59,6 @@ public class ReservationController {
     public String cancelReservation(@PathVariable Long id) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
         boolean isCanceled = reservationService.cancelReservation(id);
-
         if (isCanceled) {
             return "redirect:/reservations";
         }
