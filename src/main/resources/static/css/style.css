@@ -35,7 +35,6 @@ tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* 버튼 스타일 */
 button {
     background-color: #dc3545;
     color: white;
@@ -51,7 +50,6 @@ button:hover {
     background-color: #c82333;
 }
 
-/* 링크 버튼 스타일 */
 a {
     display: inline-block;
     text-decoration: none;
@@ -68,7 +66,6 @@ a:hover {
     background-color: #218838;
 }
 
-/* 입력 폼 스타일 */
 form {
     width: 40%;
     margin: 0 auto;
@@ -85,7 +82,7 @@ label {
     margin: 10px 0 5px;
 }
 
-input[type="number"] {
+input[type="number"], input[type="datetime-local"], input[type="text"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ced4da;

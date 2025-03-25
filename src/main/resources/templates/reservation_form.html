@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>예약 추가</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <h1>새 예약 추가</h1>
-<form method="post" th:action="@{/reservations}">
+<form th:action="@{/reservations}" method="post">
     <label for="doctorId">의사 ID:</label>
-    <input id="doctorId" name="doctorId" required type="number">
+    <input type="number" id="doctorId" name="doctorId" value="1" readonly required>
     <br>
 
     <label for="patientId">환자 ID:</label>
-    <input id="patientId" name="patientId" required type="number">
+    <input type="number" id="patientId" name="patientId" required>
+    <br>
+
+    <label for="reservationTime">예약 시간:</label>
+    <input type="datetime-local" id="reservationTime" name="reservationTime" required>
+    <small>※ 예약 가능 시간: 09:00 ~ 17:00 (1시간 단위)</small>
     <br>
 
     <button type="submit">예약하기</button>
