@@ -4,7 +4,6 @@ import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -20,18 +19,25 @@ public class ReservationRepository {
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
     public Reservation save(Reservation reservation) {
-        reservation.setId(nextId++);
-        reservations.add(reservation);
+        Reservation toSave = new Reservation(
+                nextId++,
+                reservation.getDoctorId(),
+                reservation.getPatientId(),
+                reservation.getReservationTime()
+        );
+        reservations.add(toSave);
         return reservation;
     }
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
-    public void deleteById(Long id) {
-        Reservation toRemove = reservations.stream()
-                .filter(r -> r.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("삭제할 예약이 존재하지 않습니다. ID: %d".formatted(id)));
+    public boolean deleteById(Long id) {
+//        Reservation toRemove = reservations.stream()
+//                .filter(r -> r.getId().equals(id))
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("삭제할 예약이 존재하지 않습니다. ID: %d".formatted(id)));
 
-        reservations.remove(toRemove);
+        return reservations.removeIf(
+                reservation -> reservation.getId().equals(id)
+        );
     }
 }
