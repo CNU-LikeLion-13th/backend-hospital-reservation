@@ -24,6 +24,7 @@ public class ReservationRepository {
     }
 
     public void deleteById(Long id) {
+        // TODO: 존재하지 않는 예약을 취소하려 하면 예외처리
         reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 }
