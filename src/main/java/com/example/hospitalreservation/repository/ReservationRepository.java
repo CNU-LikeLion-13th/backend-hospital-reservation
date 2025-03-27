@@ -31,11 +31,6 @@ public class ReservationRepository {
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
     public boolean deleteById(Long id) {
-//        Reservation toRemove = reservations.stream()
-//                .filter(r -> r.getId().equals(id))
-//                .findFirst()
-//                .orElseThrow(() -> new IllegalArgumentException("삭제할 예약이 존재하지 않습니다. ID: %d".formatted(id)));
-
         return reservations.removeIf(
                 reservation -> reservation.getId().equals(id)
         );
