@@ -13,6 +13,11 @@ public record CreateReservationRequest(
         LocalDateTime reservationTime
 ) {
 
+    public CreateReservationCommand toCommand() {
+        validateReservationTime(reservationTime);
+        return new CreateReservationCommand(doctorId, patientId, reservationTime);
+    }
+
     private void validateReservationTime(LocalDateTime reservationTime) {
         if (!isWithinBusinessHours(reservationTime.toLocalTime())) {
             throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
@@ -29,10 +34,5 @@ public record CreateReservationRequest(
 
     private boolean isHourlySlot(LocalTime time) {
         return time.getMinute() == 0;
-    }
-
-    public CreateReservationCommand toCommand() {
-        validateReservationTime(reservationTime);
-        return new CreateReservationCommand(doctorId, patientId, reservationTime);
     }
 }
