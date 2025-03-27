@@ -13,26 +13,26 @@ public record CreateReservationRequest(
         LocalDateTime reservationTime
 ) {
 
-        private void validateReservationTime(LocalDateTime reservationTime) {
-                if (!isWithinBusinessHours(reservationTime.toLocalTime())) {
-                        throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
-                }
-
-                if (!isHourlySlot(reservationTime.toLocalTime())) {
-                        throw new ApplicationException(ReservationExceptionCode.INVALID_TIME_INTERVAL);
-                }
+    private void validateReservationTime(LocalDateTime reservationTime) {
+        if (!isWithinBusinessHours(reservationTime.toLocalTime())) {
+            throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
         }
 
-        private boolean isWithinBusinessHours(LocalTime time) {
-                return !time.isBefore(LocalTime.of(9, 0)) && !time.isAfter(LocalTime.of(16, 59));
+        if (!isHourlySlot(reservationTime.toLocalTime())) {
+            throw new ApplicationException(ReservationExceptionCode.INVALID_TIME_INTERVAL);
         }
+    }
 
-        private boolean isHourlySlot(LocalTime time) {
-                return time.getMinute() == 0;
-        }
+    private boolean isWithinBusinessHours(LocalTime time) {
+        return !time.isBefore(LocalTime.of(9, 0)) && !time.isAfter(LocalTime.of(16, 59));
+    }
 
-        public CreateReservationCommand toCommand() {
-                validateReservationTime(reservationTime);
-                return new CreateReservationCommand(doctorId, patientId, reservationTime);
-        }
+    private boolean isHourlySlot(LocalTime time) {
+        return time.getMinute() == 0;
+    }
+
+    public CreateReservationCommand toCommand() {
+        validateReservationTime(reservationTime);
+        return new CreateReservationCommand(doctorId, patientId, reservationTime);
+    }
 }

@@ -9,6 +9,7 @@ public record CreateReservationCommand(
         Long patientId,
         LocalDateTime reservationTime
 ) {
+
     public Reservation toReservation() {
         return new Reservation(null, doctorId, patientId, reservationTime);
     }

@@ -2,18 +2,20 @@ package com.example.hospitalreservation.reservation.controller;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.controller.request.CreateReservationRequest;
+import com.example.hospitalreservation.reservation.controller.request.DeleteReservationRequest;
 import com.example.hospitalreservation.reservation.domain.Reservation;
+import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.example.hospitalreservation.reservation.service.ReservationService;
 import com.example.hospitalreservation.reservation.service.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.service.command.DeleteReservationCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/reservations")
 @Controller
 public class ReservationController {
@@ -48,14 +50,13 @@ public class ReservationController {
         }
     }
 
-
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
-        boolean isCanceled = reservationService.cancelReservation(id);
-        if (isCanceled) {
-            return "redirect:/reservations";
+    public String cancelReservation(@PathVariable Long id, @RequestParam String cancelReason, Model model) {
+        DeleteReservationCommand deleteReservationCommand = DeleteReservationRequest.toCommand(id, cancelReason);
+        if (!reservationService.cancelReservation(deleteReservationCommand)) {
+            model.addAttribute("errorMessage", ReservationExceptionCode.RESERVATION_NOT_FOUND);
         }
-
-        return "nyah";
+        model.addAttribute("reservations", reservationService.getAllReservations());
+        return "redirect:/reservations";
     }
 }
