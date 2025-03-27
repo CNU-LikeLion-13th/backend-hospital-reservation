@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.model;
+package com.example.hospitalreservation.reservation.domain;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +9,6 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime reservationTime;
 
-    // TODO : 필요한 메서드가 있다면 작성해주세요.
     public Reservation(
             final Long id,
             final Long doctorId,
