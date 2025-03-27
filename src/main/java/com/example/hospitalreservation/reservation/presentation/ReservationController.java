@@ -1,13 +1,13 @@
-package com.example.hospitalreservation.reservation.controller;
+package com.example.hospitalreservation.reservation.presentation;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
-import com.example.hospitalreservation.reservation.controller.request.CreateReservationRequest;
-import com.example.hospitalreservation.reservation.controller.request.DeleteReservationRequest;
-import com.example.hospitalreservation.reservation.domain.Reservation;
+import com.example.hospitalreservation.reservation.presentation.request.CreateReservationRequest;
+import com.example.hospitalreservation.reservation.presentation.request.DeleteReservationRequest;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
-import com.example.hospitalreservation.reservation.service.ReservationService;
-import com.example.hospitalreservation.reservation.service.command.CreateReservationCommand;
-import com.example.hospitalreservation.reservation.service.command.DeleteReservationCommand;
+import com.example.hospitalreservation.reservation.application.ReservationService;
+import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

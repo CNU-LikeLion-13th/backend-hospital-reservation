@@ -1,8 +1,9 @@
-package com.example.hospitalreservation.reservation.domain;
+package com.example.hospitalreservation.reservation.domain.service;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
-import com.example.hospitalreservation.reservation.repository.ReservationRepository;
+import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
 import org.springframework.stereotype.Component;
 
 @Component

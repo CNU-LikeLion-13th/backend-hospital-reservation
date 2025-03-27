@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.patient.domain;
+package com.example.hospitalreservation.patient.domain.entity;
 
 public class Patient {
     private Long id;

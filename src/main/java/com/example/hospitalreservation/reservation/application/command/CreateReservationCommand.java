@@ -1,6 +1,6 @@
-package com.example.hospitalreservation.reservation.service.command;
+package com.example.hospitalreservation.reservation.application.command;
 
-import com.example.hospitalreservation.reservation.domain.Reservation;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 
 import java.time.LocalDateTime;
 

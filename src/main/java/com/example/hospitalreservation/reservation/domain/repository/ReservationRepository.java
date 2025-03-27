@@ -1,14 +1,13 @@
-package com.example.hospitalreservation.reservation.repository;
+package com.example.hospitalreservation.reservation.domain.repository;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
-import com.example.hospitalreservation.reservation.domain.Reservation;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ReservationRepository {

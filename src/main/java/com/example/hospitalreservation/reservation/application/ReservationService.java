@@ -1,11 +1,11 @@
-package com.example.hospitalreservation.reservation.service;
+package com.example.hospitalreservation.reservation.application;
 
-import com.example.hospitalreservation.reservation.domain.Reservation;
-import com.example.hospitalreservation.reservation.domain.ReservationCanceler;
-import com.example.hospitalreservation.reservation.domain.ReservationRegister;
-import com.example.hospitalreservation.reservation.repository.ReservationRepository;
-import com.example.hospitalreservation.reservation.service.command.CreateReservationCommand;
-import com.example.hospitalreservation.reservation.service.command.DeleteReservationCommand;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
+import com.example.hospitalreservation.reservation.domain.service.ReservationCanceler;
+import com.example.hospitalreservation.reservation.domain.service.ReservationRegister;
+import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
+import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

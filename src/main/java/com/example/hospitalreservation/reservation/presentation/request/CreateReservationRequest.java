@@ -1,8 +1,8 @@
-package com.example.hospitalreservation.reservation.controller.request;
+package com.example.hospitalreservation.reservation.presentation.request;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
-import com.example.hospitalreservation.reservation.service.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

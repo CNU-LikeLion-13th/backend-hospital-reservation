@@ -1,9 +1,10 @@
-package com.example.hospitalreservation.reservation.domain;
+package com.example.hospitalreservation.reservation.domain.service;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
-import com.example.hospitalreservation.reservation.repository.ReservationRepository;
-import com.example.hospitalreservation.reservation.service.command.DeleteReservationCommand;
+import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
+import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

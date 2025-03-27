@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.reservation.service.command;
+package com.example.hospitalreservation.reservation.application.command;
 
 public record DeleteReservationCommand(
         Long id,
