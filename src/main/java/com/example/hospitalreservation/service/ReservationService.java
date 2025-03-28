@@ -1,7 +1,9 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.model.DeleteReservationRequest;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
+import com.example.hospitalreservation.utils.GlobalLogger;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.util.List;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
@@ -28,8 +31,8 @@ public class ReservationService {
         return reservationRepository.save(newReservation);
     }
 
-    public void cancelReservation(Long id) {
-        // TODO: 취소 사유를 로그로 출력해야 한다.
+    public void cancelReservation(Long id, DeleteReservationRequest dto) {
         reservationRepository.deleteById(id);
+        GlobalLogger.log(dto.getCancelReason());
     }
 }
