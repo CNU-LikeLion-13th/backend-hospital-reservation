@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.model.DeleteReservationRequest;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.service.ReservationService;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,9 @@ public class ReservationController {
     }
 
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
-        reservationService.cancelReservation(id);
+    public String cancelReservation(@PathVariable Long id,
+                                    @ModelAttribute DeleteReservationRequest request) {
+        reservationService.cancelReservation(id, request);
         return "redirect:/reservations";
     }
 }
