@@ -1,11 +1,14 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.dto.ReservationDTO;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -15,12 +18,16 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public List<ReservationDTO> getAllReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return reservations.stream()
+                .map(ReservationDTO::fromReservation)
+                .collect(Collectors.toList());
     }
 
     public Reservation createReservation(Long doctorId, Long patientId) {
-        Reservation reservation = Reservation.of(doctorId, patientId, LocalDateTime.now());
+        LocalDateTime reservationTime = LocalDateTime.now();
+        Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
         return reservationRepository.save(reservation);
     }
 

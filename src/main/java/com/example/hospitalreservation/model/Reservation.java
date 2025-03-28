@@ -22,10 +22,6 @@ public class Reservation {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getDoctorId() {
         return doctorId;
     }
@@ -36,5 +32,10 @@ public class Reservation {
 
     public LocalDateTime getReservationTime() {
         return reservationTime;
+    }
+
+    // 삭제하고 싶으나 일단 킵
+    public void setId(Long id) {
+        this.id = id;
     }
 }
