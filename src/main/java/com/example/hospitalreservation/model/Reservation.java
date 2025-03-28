@@ -19,6 +19,13 @@ public class Reservation {
         return new Reservation(doctorId, patientId, reservationTime);
     }
 
+    public static Reservation from(CreateReservationRequest request) {
+        return new Reservation(
+                request.getDoctorId(),
+                request.getPatientId(),
+                request.getReservationTime());
+    }
+
     public Long getId() {
         return id;
     }
