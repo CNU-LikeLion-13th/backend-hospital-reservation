@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.model.CreateReservationRequest;
 import com.example.hospitalreservation.model.DeleteReservationRequest;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
@@ -22,8 +23,8 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        Reservation newReservation = Reservation.of(doctorId, patientId, reservationTime);
+    public Reservation createReservation(CreateReservationRequest dto) {
+        Reservation newReservation = Reservation.from(dto);
 
         // TODO: 의사의 시간에 포함되는가?
         // TODO: 다른 예약과 시간이 겹치지 않는가?
