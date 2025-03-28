@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.model.CreateReservationRequest;
 import com.example.hospitalreservation.model.DeleteReservationRequest;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.service.ReservationService;
@@ -34,9 +35,9 @@ public class ReservationController {
     }
 
     @PostMapping
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
-        reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
-        return "redirect:/reservations";
+    public String createReservation(@ModelAttribute CreateReservationRequest dto) {
+        Reservation reservation = reservationService.createReservation(dto);
+        return "redirect:/reservations?reservationId="+reservation.getId();
     }
 
     @PostMapping("/delete/{id}")
