@@ -23,8 +23,13 @@ public class ReservationRepository {
         return reservation;
     }
 
-    public void deleteById(Long id) {
-        // TODO: 존재하지 않는 예약을 취소하려 하면 예외처리
-        reservations.removeIf(reservation -> reservation.getId().equals(id));
+    public boolean deleteById(Long id) {
+        boolean isRemoved = reservations.removeIf(reservation -> reservation.getId().equals(id));
+
+        if(!isRemoved){
+            throw new IllegalArgumentException("존재하지 않는 예약입니다.");
+        }
+
+        return isRemoved;
     }
 }
