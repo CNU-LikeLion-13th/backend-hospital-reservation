@@ -50,7 +50,7 @@ public class ReservationController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public  ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(ErrorResponse.of(e.getMessage()));
     }
 }
