@@ -7,16 +7,21 @@ import com.example.hospitalreservation.repository.ReservationRepository;
 import com.example.hospitalreservation.utils.GlobalLogger;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ReservationService {
+    private static final int START_TIME_AVAILABLE = 9;
+    private static final int END_TIME_AVAILABLE = 17;
 
     private final ReservationRepository reservationRepository;
+    private final TimeTable timeTable;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, TimeTable timeTable) {
         this.reservationRepository = reservationRepository;
+        this.timeTable = timeTable;
     }
 
     public List<Reservation> getAllReservations() {
@@ -24,16 +29,30 @@ public class ReservationService {
     }
 
     public Reservation createReservation(CreateReservationRequest dto) {
-        Reservation newReservation = Reservation.from(dto);
+        Reservation reservation = Reservation.from(dto);
 
-        // TODO: 의사의 시간에 포함되는가?
-        // TODO: 다른 예약과 시간이 겹치지 않는가?
+        checkAvailableTimes(reservation);
+        timeTable.enroll(reservation);
 
-        return reservationRepository.save(newReservation);
+        return reservationRepository.save(reservation);
     }
 
     public void cancelReservation(Long id, DeleteReservationRequest dto) {
         reservationRepository.deleteById(id);
+        timeTable.cancelById(id);
+
         GlobalLogger.log(dto.getCancelReason());
+    }
+
+    private void checkAvailableTimes(Reservation reservation) {
+        LocalDateTime today = LocalDate.now().atStartOfDay();
+        LocalDateTime availableStartTime = today.withHour(START_TIME_AVAILABLE);
+        LocalDateTime availableEndTime = today.withHour(END_TIME_AVAILABLE);
+
+        if (!reservation.isFullyContainedIn(availableStartTime, availableEndTime)) {
+            throw new IllegalArgumentException("의사의 진료 가능시간 (%02d:%02d~%02d:%02d) 내에서만 예약할 수 있습니다."
+                    .formatted(availableStartTime.getHour(), availableStartTime.getMinute()
+                            , availableEndTime.getHour(), availableEndTime.getMinute()));
+        }
     }
 }
