@@ -26,7 +26,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String getReservations(Model model) {
         List<Reservation> reservations = reservationService.getAllReservations();
         model.addAttribute("reservations", reservations);
@@ -38,7 +38,7 @@ public class ReservationController {
         return "reservation_form";
     }
 
-    @PostMapping()
+    @PostMapping
     public String createReservation(CreateReservationRequest createReservationRequest, Model model) {
         try {
             CreateReservationCommand createReservationCommand = createReservationRequest.toCommand();
