@@ -42,5 +42,6 @@ public class ReservationService {
     // TODO : 예약을 취소하는 코드를 작성해주세요.
     public void cancelReservation(Long id) {
         reservationRepository.deleteById(id);
+        
     }
 }

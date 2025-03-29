@@ -21,7 +21,7 @@ public class ReservationRepository {
 
     // TODO : 모든 예약 엔티티를 조회하는 코드를 작성해주세요.
     public List<Reservation> findAll() {
-        return reservations;
+        return new ArrayList<>(reservations);
     }
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
@@ -31,12 +31,7 @@ public class ReservationRepository {
     }
 
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
-    public void deleteById(Long id) {
-        for(int i = reservations.size() - 1; i >= 0; i--){
-            if (reservations.get(i).equals(id)) {
-                reservations.remove(i);
-            }
-        }
-        return;
+    public boolean deleteById(Long id) {
+        return reservations.removeIf(r -> r.id.equals(id));
     }
 }
