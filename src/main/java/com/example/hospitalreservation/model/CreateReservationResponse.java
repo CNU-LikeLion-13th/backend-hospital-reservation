@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.model;
 
+import com.example.hospitalreservation.common.SuccessMessage;
 import com.example.hospitalreservation.domain.Reservation;
 
 public class CreateReservationResponse {

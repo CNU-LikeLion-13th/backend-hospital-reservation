@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.common.ErrorResponse;
 import com.example.hospitalreservation.domain.Reservation;
 import com.example.hospitalreservation.model.*;
 import com.example.hospitalreservation.service.ReservationService;
