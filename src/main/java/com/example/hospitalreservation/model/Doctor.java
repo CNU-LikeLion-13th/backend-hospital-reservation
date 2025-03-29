@@ -1,19 +1,16 @@
 package com.example.hospitalreservation.model;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
+@Component
 public class Doctor {
     private Long id;
     private String name;
     private String specialization;
     private final int START_HOUR = 9;
     private final int END_HOUR = 17;
-
-    public Doctor(Long id, String name, String specialization) {
-        this.id = id;
-        this.name = name;
-        this.specialization = specialization;
-    }
 
     public void isValid(LocalDateTime reservationTime) {
         isValidRange(reservationTime);
