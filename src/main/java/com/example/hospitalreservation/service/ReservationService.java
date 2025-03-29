@@ -40,8 +40,10 @@ public class ReservationService {
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
-        reservationRepository.deleteById(id);
-        
+    public void cancelReservation(Long id, String reason) {
+        boolean remove = reservationRepository.deleteById(id);
+        if (!remove){
+            throw new IllegalArgumentException("존재하지 않는 예약입니다.");
+        }
     }
 }
