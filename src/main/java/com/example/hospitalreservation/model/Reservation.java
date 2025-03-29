@@ -1,13 +1,16 @@
 package com.example.hospitalreservation.model;
 
+import com.example.hospitalreservation.service.TimeEntity;
+
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class Reservation implements TimeEntity {
+    private static final int RESERVATION_END_HOURS = 1;
+
     private Long id;
     private Long doctorId;
     private Long patientId;
     private LocalDateTime reservationTime;
-
 
     private Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.doctorId = doctorId;
@@ -44,5 +47,15 @@ public class Reservation {
 
     public LocalDateTime getReservationTime() {
         return reservationTime;
+    }
+
+    @Override
+    public LocalDateTime getStartTime() {
+        return reservationTime;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return reservationTime.plusHours(RESERVATION_END_HOURS);
     }
 }
