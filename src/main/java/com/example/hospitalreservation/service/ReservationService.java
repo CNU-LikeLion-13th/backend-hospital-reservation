@@ -1,20 +1,25 @@
 package com.example.hospitalreservation.service;
 
 import com.example.hospitalreservation.dto.ReservationDTO;
+import com.example.hospitalreservation.model.Doctor;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
+    private final Doctor doctor;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, Doctor doctor) {
         this.reservationRepository = reservationRepository;
+        this.doctor = doctor;
     }
 
     public List<ReservationDTO> getAllReservations() {
@@ -25,9 +30,15 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        isValid(reservationTime);
-        Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
-        return reservationRepository.save(reservation);
+        try {
+            doctor.isValid(reservationTime); // 의사 진료 시간 범위 체크
+            isExist(reservationTime); // 예약 시간 중복 체크
+            Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
+            return reservationRepository.save(reservation);
+        } catch (Exception e){
+            //
+        }
+        return null;
     }
 
     public void cancelReservation(Long id) {
@@ -35,12 +46,12 @@ public class ReservationService {
         return;
     }
 
-    private void isValid(LocalDateTime reservationTime) {
-        if (reservationTime.getHour() < 9 || reservationTime.getHour() > 17) {
-            throw new IllegalArgumentException("의사의 진료 가능 시간 (09:00~17:00) 내에서만 예약할 수 있습니다.");
-        }
-        if (reservationTime.getMinute() != 0) {
-            throw new IllegalArgumentException("예약 시간은 1시간 단위여야 합니다.");
+    private void isExist(LocalDateTime reservationTime) {
+        List<Reservation> reservations = reservationRepository.findAll();
+        for (Reservation reservation : reservations) {
+            if (reservation.getReservationTime().isEqual(reservationTime)) {
+                throw new IllegalArgumentException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
+            }
         }
     }
 }

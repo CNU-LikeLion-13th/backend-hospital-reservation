@@ -3,6 +3,7 @@ package com.example.hospitalreservation.repository;
 import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
