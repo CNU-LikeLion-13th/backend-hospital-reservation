@@ -26,7 +26,7 @@ public class ReservationRepository {
     public void deleteById(Long id) {
         boolean isRemoved = reservations.removeIf(reservation -> reservation.getId().equals(id));
 
-        if(!isRemoved){
+        if (!isRemoved) {
             throw new IllegalArgumentException("존재하지 않는 예약입니다.");
         }
     }
