@@ -11,14 +11,12 @@ import java.util.List;
 public class ReservationRepository {
 
     private final List<Reservation> reservations = new ArrayList<>();
-    private Long nextId = 1L;
 
     public List<Reservation> findAll() {
         return reservations;
     }
 
     public Reservation save(Reservation reservation) {
-        reservation.setId(nextId++);
         reservations.add(reservation);
         return reservation;
     }

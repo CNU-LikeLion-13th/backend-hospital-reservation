@@ -1,14 +1,15 @@
 package com.example.hospitalreservation.controller;
 
+import com.example.hospitalreservation.dto.ReservationRequest;
+import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.service.ReservationService;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/reservations")
 public class ReservationController {
     private final ReservationService reservationService;
@@ -29,12 +30,20 @@ public class ReservationController {
     }
 
     @PostMapping
-    public String createReservation(
-            @RequestParam Long doctorId,
-            @RequestParam Long patientId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationTime) {
-        reservationService.createReservation(doctorId, patientId, reservationTime);
-        return "redirect:/reservations";
+    public ResponseEntity<?> createReservation(@RequestBody ReservationRequest request) {
+        Reservation reservation = reservationService.createReservation(
+                request.getPatientId(),
+                request.getDoctorId(),
+                request.getReservationTime(),
+                request.getReason()
+        );
+
+        Long reservationId = reservation.getId();
+
+        return ResponseEntity.ok().body(Map.of(
+                "reservationId", reservationId,
+                "message", "예약이 완료되었습니다."
+        ));
     }
 
     @PostMapping("/delete/{id}")

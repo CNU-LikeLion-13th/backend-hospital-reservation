@@ -7,15 +7,14 @@ import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final Doctor doctor;
+    private Long nextId = 1L;
 
     public ReservationService(ReservationRepository reservationRepository, Doctor doctor) {
         this.reservationRepository = reservationRepository;
@@ -29,11 +28,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime, String reason) {
         try {
             doctor.isValid(reservationTime); // 의사 진료 시간 범위 체크
             isExist(reservationTime); // 예약 시간 중복 체크
-            Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
+            Reservation reservation = Reservation.of(nextId++, doctorId, patientId, reservationTime, reason);
             return reservationRepository.save(reservation);
         } catch (Exception e){
             //
