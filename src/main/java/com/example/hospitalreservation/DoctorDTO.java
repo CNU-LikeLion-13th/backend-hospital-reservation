@@ -4,20 +4,20 @@ import com.example.hospitalreservation.model.Doctor;
 
 public class DoctorDTO {
     public final Long id;
-    public final String name;
-    public final String specialization;
+    public final int startHour;
+    public final int endHour;
 
-    public DoctorDTO(Long id, String name, String specialization) {
+    public DoctorDTO(Long id, int startHour, int endHour) {
         this.id = id;
-        this.name = name;
-        this.specialization = specialization;
+        this.startHour = startHour;
+        this.endHour = endHour;
     }
 
     public static DoctorDTO from(Doctor doctor) {
         return new DoctorDTO(
                 doctor.id,
-                doctor.name,
-                doctor.specialization
+                doctor.startHour,
+                doctor.endHour
         );
     }
 }

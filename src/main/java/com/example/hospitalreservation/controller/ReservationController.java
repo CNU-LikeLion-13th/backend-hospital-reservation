@@ -45,9 +45,9 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
+    public String cancelReservation(@PathVariable Long id, String reason) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
-        reservationService.cancelReservation(id);
+        reservationService.cancelReservation(id, reason);
         return "redirect:/reservations";
     }
 }
