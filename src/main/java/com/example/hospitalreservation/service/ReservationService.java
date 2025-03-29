@@ -1,10 +1,8 @@
 package com.example.hospitalreservation.service;
 
-import com.example.hospitalreservation.model.CreateReservationRequest;
-import com.example.hospitalreservation.model.DeleteReservationRequest;
-import com.example.hospitalreservation.model.Reservation;
+import com.example.hospitalreservation.model.*;
 import com.example.hospitalreservation.repository.ReservationRepository;
-import com.example.hospitalreservation.utils.GlobalLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ReservationService {
     private static final int START_TIME_AVAILABLE = 9;
     private static final int END_TIME_AVAILABLE = 17;
@@ -28,20 +27,26 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public Reservation createReservation(CreateReservationRequest dto) {
+    public CreateReservationResponse createReservation(CreateReservationRequest dto) {
         Reservation reservation = Reservation.from(dto);
+        saveReservation(reservation);
 
+        return CreateReservationResponse.from(reservation, SuccessMessage.CREATE_RESERVATION);
+    }
+
+    private void saveReservation(Reservation reservation) {
         checkAvailableTimes(reservation);
         timeTable.enroll(reservation);
 
-        return reservationRepository.save(reservation);
+        reservationRepository.save(reservation);
     }
 
-    public void cancelReservation(Long id, DeleteReservationRequest dto) {
+    public DeleteReservationResponse cancelReservation(Long id, DeleteReservationRequest dto) {
         reservationRepository.deleteById(id);
         timeTable.cancelById(id);
 
-        GlobalLogger.log(dto.getCancelReason());
+        log.info("{}", dto.getCancelReason());
+        return DeleteReservationResponse.from(SuccessMessage.DELETE_RESERVATION);
     }
 
     private void checkAvailableTimes(Reservation reservation) {
