@@ -31,24 +31,38 @@ public class ReservationService {
 
     public CreateReservationResponse createReservation(CreateReservationRequest dto) {
         Reservation reservation = Reservation.from(dto);
+
         saveReservation(reservation);
 
         return CreateReservationResponse.from(reservation, SuccessMessage.CREATE_RESERVATION);
     }
 
+    public DeleteReservationResponse cancelReservation(Long id, DeleteReservationRequest dto) {
+        deleteReservation(id);
+
+        log.info("{}", dto.getCancelReason());
+
+        return DeleteReservationResponse.from(SuccessMessage.DELETE_RESERVATION);
+    }
+
     private void saveReservation(Reservation reservation) {
-        checkAvailableTimes(reservation);
-        timeTable.enroll(reservation);
+        validate(reservation);
+        insertReservationTime(reservation);
 
         reservationRepository.save(reservation);
     }
 
-    public DeleteReservationResponse cancelReservation(Long id, DeleteReservationRequest dto) {
+    private void insertReservationTime(Reservation reservation) {
+        timeTable.enroll(reservation);
+    }
+
+    private void validate(Reservation reservation) {
+        checkAvailableTimes(reservation);
+    }
+
+    private void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
         timeTable.cancelById(id);
-
-        log.info("{}", dto.getCancelReason());
-        return DeleteReservationResponse.from(SuccessMessage.DELETE_RESERVATION);
     }
 
     private void checkAvailableTimes(Reservation reservation) {
