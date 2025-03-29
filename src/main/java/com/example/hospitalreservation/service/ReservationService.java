@@ -28,11 +28,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime, String reason) {
+    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         try {
             doctor.isValid(reservationTime); // 의사 진료 시간 범위 체크
             isExist(reservationTime); // 예약 시간 중복 체크
-            Reservation reservation = Reservation.of(nextId++, doctorId, patientId, reservationTime, reason);
+            Reservation reservation = Reservation.of(nextId++, doctorId, patientId, reservationTime);
             return reservationRepository.save(reservation);
         } catch (Exception e){
             //

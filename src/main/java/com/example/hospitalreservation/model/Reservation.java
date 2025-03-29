@@ -7,18 +7,17 @@ public class Reservation {
     private final Long doctorId;
     private final Long patientId;
     private final LocalDateTime reservationTime;
-    private final String reason;
+    private String reason;
 
-    private Reservation(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime, String reason) {
+    private Reservation(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.reservationTime = reservationTime;
-        this.reason = reason;
     }
 
-    public static Reservation of(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime, String reason) {
-        return new Reservation(id, doctorId, patientId, reservationTime, reason);
+    public static Reservation of(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        return new Reservation(id, doctorId, patientId, reservationTime);
     }
 
     public Long getId() {
