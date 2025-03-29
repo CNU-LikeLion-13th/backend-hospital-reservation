@@ -1,5 +1,7 @@
 package com.example.hospitalreservation.model;
 
+import com.example.hospitalreservation.domain.Reservation;
+
 public class CreateReservationResponse {
     private Long reservationId;
     private String message;

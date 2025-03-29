@@ -1,5 +1,6 @@
-package com.example.hospitalreservation.model;
+package com.example.hospitalreservation.domain;
 
+import com.example.hospitalreservation.model.CreateReservationRequest;
 import com.example.hospitalreservation.service.TimeEntity;
 
 import java.time.LocalDateTime;

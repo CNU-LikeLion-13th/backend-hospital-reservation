@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.domain.Reservation;
 import com.example.hospitalreservation.model.*;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
