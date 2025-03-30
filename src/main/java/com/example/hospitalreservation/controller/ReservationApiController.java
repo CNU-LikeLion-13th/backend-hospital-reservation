@@ -25,7 +25,7 @@ public class ReservationApiController {
         Long patientId = request.getPatientId();
         LocalDateTime reservationTime = request.getReservationTime();
         CreateReservationResponse response = reservationService.createReservation(doctorId, patientId, reservationTime);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response); // 201 CREATED 응답
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
