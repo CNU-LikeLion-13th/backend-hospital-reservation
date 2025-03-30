@@ -15,7 +15,7 @@ public class ReservationRepository {
     // TODO : 모든 예약 엔티티를 조회하는 코드를 작성해주세요.
     public List<Reservation> findAll() {
         if (!reservations.isEmpty()) {
-            return reservations.subList(0, reservations.size());
+            return reservations;
         } else {
             return null;
         }
@@ -25,7 +25,7 @@ public class ReservationRepository {
     public Reservation save(Reservation reservation) {
         reservation.setId(nextId);
         nextId++;
-        if (!reservations.contains(reservation)) {
+        if (!reservations.contains(reservation.getId().equals(nextId))) {
             reservations.add(reservation);
             return reservation;
         } else {
