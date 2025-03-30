@@ -21,6 +21,7 @@ public class ReservationRepository {
     public Reservation save(Reservation reservation) {
         reservation.setId(nextId++);
         reservations.add(reservation);
+
         return reservation;
     }
 

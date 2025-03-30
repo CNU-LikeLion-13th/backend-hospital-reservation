@@ -27,7 +27,7 @@ public class ReservationController {
 	@GetMapping("/reservations")
     public String getReservations(Model model) {
         // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
-		model.addAttribute("reservations", reservationService.getClass());
+		model.addAttribute("reservations", reservationService.getAllReservations());
 		
         return "index";
     }
