@@ -2,6 +2,8 @@ package com.example.hospitalreservation.service;
 
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class ReservationService {
 
     // TODO : 주입 받아야 객체를 작성해주세요.
     private final ReservationRepository reservationRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
     @Autowired
     public ReservationService(ReservationRepository reservationRepository) {
@@ -41,8 +44,16 @@ public class ReservationService {
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
-        reservationRepository.deleteById(id);
+    public void cancelReservation(Long id, String cancellationReason) {
+        Reservation reservation = reservationRepository.findById(id);
+        if (reservation == null) {
+            throw new IllegalArgumentException("예약을 찾을 수 없습니다.");
+        }
+        reservation.setStatus("canceled");
+        reservation.setCancellationReason(cancellationReason);
+        reservation.setCanceledAt(LocalDateTime.now());
+        reservationRepository.update(reservation);
+        logger.info("Reservation {} canceled. Reason: {}", id, cancellationReason);
     }
 
 }
