@@ -5,10 +5,7 @@ import java.time.LocalDateTime;
 import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.hospitalreservation.service.ReservationService;
 
@@ -58,10 +55,11 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
 	@PostMapping("/reservations/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
+    public String cancelReservation(@PathVariable Long id, @RequestParam String cancelReason, Model model) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
-		reservationService.cancelReservation(id);
-		
+
+        reservationService.cancelReservation(id, cancelReason);
+
         return "redirect:/reservations";
     }
 }

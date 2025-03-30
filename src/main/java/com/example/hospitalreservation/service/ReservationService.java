@@ -2,6 +2,8 @@ package com.example.hospitalreservation.service;
 
 import com.example.hospitalreservation.dto.ReservationDTO;
 import com.example.hospitalreservation.model.Reservation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.example.hospitalreservation.repository.ReservationRepository;
@@ -17,6 +19,8 @@ public class ReservationService {
 
     // TODO : 주입 받아야 할 객체를 작성해주세요.
 	private ReservationRepository reservationRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(ReservationService.class);
 
 	public ReservationService(ReservationRepository reservationRepository) {
 		this.reservationRepository = reservationRepository;
@@ -62,8 +66,9 @@ public class ReservationService {
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
+    public void cancelReservation(Long id, String cancelReason) {
         if (isReservationExists(id)) {
+            log.info("예약 ID {} 취소, 사유 : {}", id , cancelReason);
             reservationRepository.deleteById(id);
         } else {
             throw new IllegalArgumentException("존재하지 않는 예약입니다.");
