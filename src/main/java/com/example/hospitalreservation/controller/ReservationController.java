@@ -24,7 +24,7 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @GetMapping("")
+    @GetMapping
     public String getReservations(Model model) {
         // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
         model.addAttribute("reservations", reservationService.getAllReservations());
@@ -39,7 +39,7 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @PostMapping("")
+    @PostMapping
     public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
         reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
