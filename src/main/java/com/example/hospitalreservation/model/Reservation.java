@@ -1,6 +1,7 @@
 package com.example.hospitalreservation.model;
 
-import java.time.LocalDateTime;
+import java.time.*;
+
 
 public class Reservation {
     private Long id;
@@ -14,6 +15,11 @@ public class Reservation {
         this.patientId = patientId;
         this.reservationTime = reservationTime;
     }
+
+    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        return new Reservation(doctorId, patientId, reservationTime);
+    }
+
     public Long getId() {
         return id;
     }
@@ -26,23 +32,12 @@ public class Reservation {
         return doctorId;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
-    }
-
     public Long getPatientId() {
         return patientId;
-    }
-
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
     }
 
     public LocalDateTime getReservationTime() {
         return reservationTime;
     }
 
-    public void setReservationTime(LocalDateTime reservationTime) {
-        this.reservationTime = reservationTime;
-    }
 }

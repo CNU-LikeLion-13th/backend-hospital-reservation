@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalTime;
+import java.util.Optional;
 
 @Repository
 public class ReservationRepository {
@@ -28,4 +30,12 @@ public class ReservationRepository {
     public void deleteById(Long id) {
         reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
+
+    // 예약 시간으로 예약 조회
+    public Optional<Reservation> findByReservationTime(LocalTime reservationTime) {
+        return reservations.stream()
+                .filter(r -> r.getReservationTime().equals(reservationTime))
+                .findFirst();
+    }
+
 }
