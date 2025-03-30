@@ -27,13 +27,14 @@ public class ReservationService {
 
     // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalTime reservationTime) {
+        LocalDateTime fullDateTime = LocalDateTime.of(LocalDate.now(), reservationTime);
+
         if (reservationTime.isBefore(LocalTime.of(9, 0)) || reservationTime.isAfter(LocalTime.of(16,0))) {
             throw new IllegalArgumentException("의사의 진료 가능 시간(09:00~17:00)내에서만 예약할 수 있습니다.");
         }
-        if (reservationRepository.findByReservationTime(reservationTime).isPresent()) {
+        if (reservationRepository.findByReservationTime(fullDateTime).isPresent()) {
             throw new IllegalArgumentException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
         }
-        LocalDateTime fullDateTime = LocalDateTime.of(LocalDate.now(), reservationTime);
         Reservation reservation = Reservation.of(doctorId, patientId, fullDateTime);
         return reservationRepository.save(reservation);
     }

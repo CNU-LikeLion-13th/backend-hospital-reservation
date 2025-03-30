@@ -44,10 +44,16 @@ public class ReservationController {
     @PostMapping
     public String createReservation(@RequestParam Long doctorId,
                                     @RequestParam Long patientId,
-                                    @RequestParam String reservationTime) {
-        LocalTime time = LocalTime.parse(reservationTime);
-        reservationService.createReservation(doctorId, patientId, time);
-        return "redirect:/reservations";
+                                    @RequestParam String reservationTime,
+                                    Model model) {
+        try {
+            LocalTime time = LocalTime.parse(reservationTime);
+            reservationService.createReservation(doctorId, patientId, time);
+            return "redirect:/reservations";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "reservation_form"; // 다시 예약 폼으로 이동
+        }
     }
 
 

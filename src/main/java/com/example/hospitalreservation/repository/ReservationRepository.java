@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -32,9 +32,9 @@ public class ReservationRepository {
     }
 
     // 예약 시간으로 예약 조회
-    public Optional<Reservation> findByReservationTime(LocalTime reservationTime) {
+    public Optional<Reservation> findByReservationTime(LocalDateTime dateTime) {
         return reservations.stream()
-                .filter(r -> r.getReservationTime().equals(reservationTime))
+                .filter(r -> r.getReservationTime().equals(dateTime))
                 .findFirst();
     }
 
