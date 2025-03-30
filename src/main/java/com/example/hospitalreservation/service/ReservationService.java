@@ -42,7 +42,6 @@ public class ReservationService {
             isExist(reservationTime); // 예약 시간 중복 체크
             Reservation reservation = Reservation.of(nextId++, doctorId, patientId, reservationTime);
             Reservation savedReservation = reservationRepository.save(reservation);
-
             return CreateReservationResponse.from(savedReservation, SuccessMessage.CREATE_RESERVATION.getMessage());
         } catch (Exception e) {
             Reservation failedReservation = Reservation.of(null, doctorId, patientId, reservationTime);
@@ -53,7 +52,6 @@ public class ReservationService {
     public DeleteReservationResponse cancelReservation(Long id, String cancelReason) {
         try {
             reservationRepository.deleteById(id);
-            // 취소 사유 로그 기록
             logger.info("예약 취소됨 - 예약 ID: {}, 취소 사유: {}", id, cancelReason);
             return DeleteReservationResponse.from(SuccessMessage.DELETE_RESERVATION.getMessage());
         } catch (Exception e) {
