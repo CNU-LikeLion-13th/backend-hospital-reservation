@@ -34,8 +34,8 @@ public class ReservationController {
     }
 
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
-        reservationService.cancelReservation(id);
+    public String cancelReservation(@PathVariable Long id, @RequestParam String cancelReason) {
+        reservationService.cancelReservation(id, cancelReason);
         return "redirect:/reservations";
     }
 }
