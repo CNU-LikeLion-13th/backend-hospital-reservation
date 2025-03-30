@@ -1,9 +1,8 @@
 package com.example.hospitalreservation.repository;
 
-import com.example.hospitalreservation.model.Reservation;
+import com.example.hospitalreservation.domain.Reservation;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.model;
+package com.example.hospitalreservation.domain;
 
 import java.time.LocalDateTime;
 

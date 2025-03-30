@@ -1,8 +1,12 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.common.ErrorMessage;
+import com.example.hospitalreservation.common.SuccessMessage;
 import com.example.hospitalreservation.dto.ReservationDTO;
-import com.example.hospitalreservation.model.Doctor;
-import com.example.hospitalreservation.model.Reservation;
+import com.example.hospitalreservation.domain.Doctor;
+import com.example.hospitalreservation.domain.Reservation;
+import com.example.hospitalreservation.model.CreateReservationResponse;
+import com.example.hospitalreservation.model.DeleteReservationResponse;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,22 +32,35 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public CreateReservationResponse createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         try {
             doctor.isValid(reservationTime); // 의사 진료 시간 범위 체크
             isExist(reservationTime); // 예약 시간 중복 체크
             Reservation reservation = Reservation.of(nextId++, doctorId, patientId, reservationTime);
-            return reservationRepository.save(reservation);
-        } catch (Exception e){
-            //
+            Reservation savedReservation = reservationRepository.save(reservation);
+
+            return CreateReservationResponse.from(savedReservation, SuccessMessage.CREATE_RESERVATION.getMessage());
+        } catch (Exception e) {
+            Reservation failedReservation = Reservation.of(null, doctorId, patientId, reservationTime);
+            return CreateReservationResponse.from(failedReservation, ErrorMessage.FAIL_CREATE.getMessage());
         }
-        return null;
     }
 
+    public DeleteReservationResponse cancelReservation(Long id) {
+        try {
+            reservationRepository.deleteById(id);
+            return DeleteReservationResponse.from(SuccessMessage.CREATE_RESERVATION.getMessage());
+        } catch (Exception e) {
+            return DeleteReservationResponse.from(ErrorMessage.FAIL_DELETE.getMessage());
+        }
+    }
+
+    /* 일단 킵
     public void cancelReservation(Long id) {
         reservationRepository.deleteById(id);
         return;
     }
+     */
 
     private void isExist(LocalDateTime reservationTime) {
         List<Reservation> reservations = reservationRepository.findAll();

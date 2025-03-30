@@ -1,6 +1,6 @@
 package com.example.hospitalreservation.dto;
 
-import com.example.hospitalreservation.model.Reservation;
+import com.example.hospitalreservation.domain.Reservation;
 
 import java.time.LocalDateTime;
 
