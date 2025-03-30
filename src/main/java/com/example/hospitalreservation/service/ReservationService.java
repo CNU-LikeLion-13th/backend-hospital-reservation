@@ -8,6 +8,8 @@ import java.time.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 // TODO : 서비스 레이어에서 필요한 어노테이션을 작성해주세요.
 @Service
@@ -40,7 +42,12 @@ public class ReservationService {
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
+    public void cancelReservation(Long id, String reason) {
+        Optional<Reservation> reservation = reservationRepository.findById(id);
+        if(reservation.isEmpty()) {
+            System.out.println("예약 ID: " + id + " 취소 사유: " + reason);
+            throw new NoSuchElementException("존재하지 않는 예약입니다.");
+        }
         reservationRepository.deleteById(id);
     }
 }

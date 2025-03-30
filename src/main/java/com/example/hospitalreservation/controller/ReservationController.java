@@ -4,6 +4,7 @@ import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class ReservationController {
     // TODO : 주입 받아야 할 객체를 설정해주세요.
     // TODO : 필요한 어노테이션을 작성해주세요.
     private final ReservationService reservationService;
+
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
@@ -57,12 +59,15 @@ public class ReservationController {
     }
 
 
-
-    // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
-        // TODO : 예약을 취소하는 코드를 작성해주세요.
-        reservationService.cancelReservation(id);
+    public String cancelReservationFromForm(@PathVariable Long id,
+                                            @RequestParam String cancelReason,
+                                            Model model) {
+        try {
+            reservationService.cancelReservation(id, cancelReason);
+        } catch (NoSuchElementException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 예약입니다.");
+        }
         return "redirect:/reservations";
     }
 }

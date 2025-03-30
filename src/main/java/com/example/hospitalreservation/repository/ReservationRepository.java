@@ -31,10 +31,15 @@ public class ReservationRepository {
         reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 
-    // 예약 시간으로 예약 조회
     public Optional<Reservation> findByReservationTime(LocalDateTime dateTime) {
         return reservations.stream()
                 .filter(r -> r.getReservationTime().equals(dateTime))
+                .findFirst();
+    }
+
+    public Optional<Reservation> findById(Long id) {
+        return reservations.stream()
+                .filter(r -> r.getId().equals(id))
                 .findFirst();
     }
 
