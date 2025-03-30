@@ -6,13 +6,11 @@ public class CreateReservationRequest {
     private Long doctorId;
     private Long patientId;
     private LocalDateTime reservationTime;
-    private String reason;
 
-    public CreateReservationRequest(Long doctorId, Long patientId, LocalDateTime reservationTime, String reason) {
+    public CreateReservationRequest(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.reservationTime = reservationTime;
-        this.reason = reason;
     }
 
     public Long getDoctorId() {
@@ -25,9 +23,5 @@ public class CreateReservationRequest {
 
     public LocalDateTime getReservationTime() {
         return reservationTime;
-    }
-
-    public String getReason() {
-        return reason;
     }
 }

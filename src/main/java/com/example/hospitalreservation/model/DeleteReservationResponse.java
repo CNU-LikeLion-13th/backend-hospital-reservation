@@ -1,7 +1,5 @@
 package com.example.hospitalreservation.model;
 
-import com.example.hospitalreservation.common.SuccessMessage;
-
 public class DeleteReservationResponse {
     private String message;
 
