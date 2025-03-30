@@ -36,6 +36,11 @@ public class ReservationRepository {
                 .filter(r -> r.getReservationTime().equals(dateTime))
                 .findFirst();
     }
+    public Optional<Reservation> findByReservationDateTime(LocalDateTime dateTime) {
+        return reservations.stream()
+                .filter(r -> r.getReservationTime().equals(dateTime))
+                .findFirst();
+    }
 
     public Optional<Reservation> findById(Long id) {
         return reservations.stream()
