@@ -40,11 +40,6 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
-        reservationRepository.deleteById(id);
-    }
-
     public void isValidReservationTime(LocalDateTime time) {
         int startHour = time.getHour();
         int minute = time.getMinute();
@@ -64,6 +59,22 @@ public class ReservationService {
         if(isDuplicate) {
             throw new IllegalArgumentException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
         }
+    }
+
+    // TODO : 예약을 취소하는 코드를 작성해주세요.
+    public void cancelReservation(Long id) {
+        if (isReservationExists(id)) {
+            reservationRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("존재하지 않는 예약입니다.");
+        }
+    }
+
+    public boolean isReservationExists(Long id) {
+        return reservationRepository.findAll().stream()
+                .anyMatch(reservation ->
+                        reservation.getId().equals(id)
+                );
     }
 
 }
