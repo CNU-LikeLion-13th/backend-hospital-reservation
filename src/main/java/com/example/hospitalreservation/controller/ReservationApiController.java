@@ -6,7 +6,6 @@ import com.example.hospitalreservation.model.DeleteReservationRequest;
 import com.example.hospitalreservation.model.DeleteReservationResponse;
 import com.example.hospitalreservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
