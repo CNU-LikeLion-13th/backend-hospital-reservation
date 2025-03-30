@@ -9,13 +9,14 @@ public class Reservation {
     private LocalDateTime reservationTime;
 
     // TODO : 필요한 메서드가 있다면 작성해주세요.
-    public Reservation() {}
-
-    // 전체 필드를 받는 생성자
     public Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.reservationTime = reservationTime;
+    }
+
+    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        return new Reservation(doctorId, patientId, reservationTime);
     }
 
     public Long getId() {

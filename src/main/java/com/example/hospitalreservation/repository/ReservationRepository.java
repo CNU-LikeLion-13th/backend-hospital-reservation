@@ -3,6 +3,7 @@ package com.example.hospitalreservation.repository;
 import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,7 @@ public class ReservationRepository {
     // TODO : 모든 예약 엔티티를 조회하는 코드를 작성해주세요.
     public List<Reservation> findAll() {
 
-
-        return ArrayList<>(reservations);
-
+        return reservations;
     }
 
     // TODO : 예약 엔티티를 저장하는 코드를 작성해주세요.
@@ -30,7 +29,13 @@ public class ReservationRepository {
     // TODO : 예약 엔티티를 삭제하는 코드를 작성해주세요.
     public void deleteById(Long id) {
 
-        reservationRepository.deleteById(id);
+        reservations.removeIf(reservation -> reservation.getId().equals(id));
+    }
 
+    public boolean existsByDoctorIdAndReservationTimeBetween(Long doctorId, LocalDateTime start, LocalDateTime end) {
+        return reservations.stream()
+                .anyMatch(reservation -> reservation.getDoctorId().equals(doctorId) &&
+                        !reservation.getReservationTime().isBefore(start) &&
+                        reservation.getReservationTime().isBefore(end));
     }
 }
