@@ -31,4 +31,6 @@ public class ReservationService {
     public void cancelReservation(Long id) {
         reservationRepository.deleteById(id);
     }
+
+    // TODO :
 }

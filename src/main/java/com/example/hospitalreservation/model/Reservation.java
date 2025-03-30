@@ -32,5 +32,4 @@ public class Reservation {
     public LocalDateTime getReservationTime() {
         return reservationTime;
     }
-
 }
