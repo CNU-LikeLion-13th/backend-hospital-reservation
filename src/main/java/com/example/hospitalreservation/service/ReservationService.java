@@ -13,11 +13,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : 서비스 레이어에서 필요한 어노테이션을 작성해주세요.
 @Service
 public class ReservationService {
 
-    // TODO : 주입 받아야 할 객체를 작성해주세요.
 	private ReservationRepository reservationRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ReservationService.class);
@@ -26,15 +24,12 @@ public class ReservationService {
 		this.reservationRepository = reservationRepository;
 	}
 
-
-    // TODO : 모든 예약 리스트를 조회하는 코드를 작성해주세요.
     public List<ReservationDTO> getAllReservations() {
         return reservationRepository.findAll().stream()
                 .map(ReservationDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         isValidReservationTime(reservationTime);
 
@@ -65,7 +60,6 @@ public class ReservationService {
         }
     }
 
-    // TODO : 예약을 취소하는 코드를 작성해주세요.
     public void cancelReservation(Long id, String cancelReason) {
         if (isReservationExists(id)) {
             log.info("예약 ID {} 취소, 사유 : {}", id , cancelReason);
@@ -81,5 +75,4 @@ public class ReservationService {
                         reservation.getId().equals(id)
                 );
     }
-
 }

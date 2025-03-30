@@ -18,7 +18,6 @@ public class Reservation {
         return new Reservation(doctorId, patientId, reservationTime);
     }
 
-    // TODO : 필요한 메서드가 있다면 작성해주세요.
     public Long getId() {
     	return id;
     }
