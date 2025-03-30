@@ -30,8 +30,9 @@ public class ReservationApiController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DeleteReservationResponse> cancelReservation(@PathVariable Long id,
-                                                                       @Validated @RequestBody DeleteReservationRequest request) {
-        DeleteReservationResponse response = reservationService.cancelReservation(id);
-        return ResponseEntity.ok(response); // 200 OK 응답
+                                                                       @RequestBody DeleteReservationRequest request) {
+        // 취소 사유를 서비스에 전달하여 로그 기록 및 처리
+        DeleteReservationResponse response = reservationService.cancelReservation(id, request.getCancelReason());
+        return ResponseEntity.ok(response);
     }
 }

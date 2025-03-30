@@ -8,6 +8,8 @@ import com.example.hospitalreservation.domain.Reservation;
 import com.example.hospitalreservation.model.CreateReservationResponse;
 import com.example.hospitalreservation.model.DeleteReservationResponse;
 import com.example.hospitalreservation.repository.ReservationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,8 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final Doctor doctor;
     private Long nextId = 1L;
+
+    private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
     public ReservationService(ReservationRepository reservationRepository, Doctor doctor) {
         this.reservationRepository = reservationRepository;
@@ -46,11 +50,14 @@ public class ReservationService {
         }
     }
 
-    public DeleteReservationResponse cancelReservation(Long id) {
+    public DeleteReservationResponse cancelReservation(Long id, String cancelReason) {
         try {
             reservationRepository.deleteById(id);
+            // 취소 사유 로그 기록
+            logger.info("예약 취소됨 - 예약 ID: {}, 취소 사유: {}", id, cancelReason);
             return DeleteReservationResponse.from(SuccessMessage.CREATE_RESERVATION.getMessage());
         } catch (Exception e) {
+            logger.error("예약 취소 실패 - 예약 ID: {}, 오류 메시지: {}", id, e.getMessage());
             return DeleteReservationResponse.from(ErrorMessage.FAIL_DELETE.getMessage());
         }
     }
