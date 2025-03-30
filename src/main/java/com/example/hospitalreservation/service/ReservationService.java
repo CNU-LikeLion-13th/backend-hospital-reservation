@@ -46,7 +46,7 @@ public class ReservationService {
             return CreateReservationResponse.from(savedReservation, SuccessMessage.CREATE_RESERVATION.getMessage());
         } catch (Exception e) {
             Reservation failedReservation = Reservation.of(null, doctorId, patientId, reservationTime);
-            return CreateReservationResponse.from(failedReservation, ErrorMessage.FAIL_CREATE.getMessage());
+            return CreateReservationResponse.from(failedReservation, ErrorMessage.CREATE_FAIL.getMessage());
         }
     }
 
@@ -55,10 +55,10 @@ public class ReservationService {
             reservationRepository.deleteById(id);
             // 취소 사유 로그 기록
             logger.info("예약 취소됨 - 예약 ID: {}, 취소 사유: {}", id, cancelReason);
-            return DeleteReservationResponse.from(SuccessMessage.CREATE_RESERVATION.getMessage());
+            return DeleteReservationResponse.from(SuccessMessage.DELETE_RESERVATION.getMessage());
         } catch (Exception e) {
             logger.error("예약 취소 실패 - 예약 ID: {}, 오류 메시지: {}", id, e.getMessage());
-            return DeleteReservationResponse.from(ErrorMessage.FAIL_DELETE.getMessage());
+            return DeleteReservationResponse.from(ErrorMessage.DELETE_FAIL.getMessage());
         }
     }
 
