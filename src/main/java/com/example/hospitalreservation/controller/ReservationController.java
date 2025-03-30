@@ -42,10 +42,12 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
-        // TODO : 예약을 진행하는 코드를 작성해주세요.
-        reservationService.createReservation(doctorId, patientId, LocalTime.now());
-        return "redirect:/reservation_form";
+    public String createReservation(@RequestParam Long doctorId,
+                                    @RequestParam Long patientId,
+                                    @RequestParam String reservationTime) {
+        LocalTime time = LocalTime.parse(reservationTime);
+        reservationService.createReservation(doctorId, patientId, time);
+        return "redirect:/reservations";
     }
 
 
