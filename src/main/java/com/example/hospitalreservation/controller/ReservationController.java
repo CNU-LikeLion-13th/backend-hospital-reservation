@@ -2,6 +2,7 @@ package com.example.hospitalreservation.controller;
 
 import java.time.LocalDateTime;
 
+import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +42,18 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
 	@PostMapping("/reservations")
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
+    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId, @RequestParam LocalDateTime reservationTime, Model model) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
-		reservationService.createReservation(doctorId, patientId);
-		
-        return "redirect:/reservations";
+
+        try {
+            Reservation reservation = reservationService.createReservation(doctorId, patientId, reservationTime);
+
+            model.addAttribute("message", "예약이 완료되었습니다." + reservation.getId());
+            return "redirect:/reservations";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "reservation_form";
+        }
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
