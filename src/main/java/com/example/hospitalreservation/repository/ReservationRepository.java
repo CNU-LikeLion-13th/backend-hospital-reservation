@@ -29,4 +29,11 @@ public class ReservationRepository {
     public void deleteById(Long id) {
         reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
+
+    public Reservation findById(Long id) {
+        return reservations.stream()
+                .filter(r -> r.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
 }

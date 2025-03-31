@@ -11,9 +11,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 // TODO : 서비스 레이어에서 필요한 어노테이션을 작성해주세요.
 @Service
 public class ReservationService {
+
+    private static final Logger log = LoggerFactory.getLogger(ReservationService.class);
 
     // TODO : 주입 받아야 객체를 작성해주세요.
     private ReservationRepository reservationRepository;
@@ -63,7 +68,13 @@ public class ReservationService {
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
+    public void cancelReservation(Long id, String reason) {
+        Reservation reservation = reservationRepository.findById(id);
+        if (reservation == null) {
+            throw new IllegalArgumentException("존재하지 않는 예약입니다.");
+        }
+
+        log.info("예약 ID {} 취소됨. 사유: {}", id, reason);
         reservationRepository.deleteById(id);
     }
 }

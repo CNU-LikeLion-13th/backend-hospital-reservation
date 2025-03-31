@@ -62,9 +62,18 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("/delete/{id}")
-    public String cancelReservation(@PathVariable Long id) {
+    public String cancelReservation(
+            @PathVariable Long id,
+            @RequestParam String reason,
+            RedirectAttributes redirectAttributes) {
         // TODO : 예약을 취소하는 코드를 작성해주세요.
-        reservationService.cancelReservation(id);
-        return "redirect:/reservations";
+        try {
+            reservationService.cancelReservation(id, reason);
+            redirectAttributes.addFlashAttribute("successMessage", "예약이 성공적으로 취소되었습니다. (ID: " + id + ")");
+            return "redirect:/reservations";
+        }  catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/reservations";
+        }
     }
 }
