@@ -4,10 +4,10 @@ import com.example.hospitalreservation.model.Reservation;
 import java.time.LocalDateTime;
 
 public class ReservationDTO {
-    public final Long id;
-    public final Long doctorId;
-    public final Long patientId;
-    public final LocalDateTime reservationTime;
+    private final Long id;
+    private final Long doctorId;
+    private final Long patientId;
+    private final LocalDateTime reservationTime;
 
     public ReservationDTO(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.id = id;

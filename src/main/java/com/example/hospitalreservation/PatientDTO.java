@@ -3,9 +3,9 @@ package com.example.hospitalreservation;
 import com.example.hospitalreservation.model.Patient;
 
 public class PatientDTO {
-    public final Long id;
-    public final String name;
-    public final int age;
+    private final Long id;
+    private final String name;
+    private final int age;
 
     public PatientDTO(Long id, String name, int age) {
         this.id = id;
