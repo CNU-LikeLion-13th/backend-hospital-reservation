@@ -16,22 +16,19 @@ public class ReservationService {
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
-    // TODO : 모든 예약 리스트를 조회하는 코드를 작성해주세요.
+    // TODO_w2 : 모든 예약 리스트를 조회하는 코드를 작성해주세요.
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
-    // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
+    // TODO_w2 : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        Reservation reservation = new Reservation();
-        reservation.setDoctorId(doctorId);
-        reservation.setPatientId(patientId);
-        reservation.setReservationTime(reservationTime);
-
+        //Reservation reservation = new Reservation();
+        Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
         return reservationRepository.save(reservation);
     }
 
-    // TODO : 예약을 취소하는 코드를 작성해주세요.
+    // TODO_w2 : 예약을 취소하는 코드를 작성해주세요.
     public void cancelReservation(Long id) {
         reservationRepository.deleteById(id);
     }

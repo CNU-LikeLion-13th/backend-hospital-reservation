@@ -9,30 +9,28 @@ public class Reservation {
     private LocalDateTime reservationTime;
 
     // TODO_w2 : 필요한 메서드가 있다면 작성해주세요.
-    public void setId(Long id){
-        this.id = id;
-    }
+    public Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        this.reservationTime = reservationTime;
+    } //refactor: setter 대신 생성자
+
+    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+        return new Reservation(doctorId, patientId, reservationTime);
+    }//정적 팩토리 메소드
+
     public long getId() {
         return id;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
-    }
     public Long getDoctorId() {
         return doctorId;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
-    }
     public Long getPatientId() {
         return patientId;
     }
 
-    public void setReservationTime(LocalDateTime reservationTime) {
-        this.reservationTime = reservationTime;
-    }
     public LocalDateTime getReservationTime() {
         return reservationTime;
     }
