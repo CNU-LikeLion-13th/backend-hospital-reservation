@@ -8,12 +8,13 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class ReservationRepository {
 
     private final List<Reservation> reservations = new ArrayList<>();
-    private Long nextId = 1L;
+    private final AtomicLong nextId = new AtomicLong(1);
 
     public Reservation findById(Long id) {
         return reservations.stream()
@@ -31,9 +32,9 @@ public class ReservationRepository {
                 .anyMatch(reservation -> reservation.getReservationTime().equals(reservationTime));
     }
 
-    public Reservation save(Reservation reservation) {
+    public synchronized Reservation save(Reservation reservation) {
         Reservation toSave = new Reservation(
-                nextId++,
+                nextId.getAndIncrement(),
                 reservation.getDoctorId(),
                 reservation.getPatientId(),
                 reservation.getReservationTime()
