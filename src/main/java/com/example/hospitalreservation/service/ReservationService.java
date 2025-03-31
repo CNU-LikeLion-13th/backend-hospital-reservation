@@ -13,19 +13,19 @@ import java.util.Optional;
 @Service
 public class ReservationService {
 
-    //주입 받아야 객체
+    //주입 받은 객체
     private final ReservationRepository reservationRepository;
 
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
-    // TODO_w2 : 모든 예약 리스트를 조회하는 코드를 작성해주세요.
+
+    //모든 예약 리스트를 조회
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
-    // TODO_w2 : 새로운 예약을 생성하는 코드를 작성해주세요.
-    public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public Long createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         //진료 가능 시간 체크
         LocalTime time = reservationTime.toLocalTime();
         if(time.isBefore(LocalTime.of(9, 0))||time.isAfter(LocalTime.of(16, 0))){
@@ -38,15 +38,16 @@ public class ReservationService {
         }
 
         Reservation reservation = Reservation.of(doctorId, patientId, reservationTime);
-        return reservationRepository.save(reservation);
+        return reservationRepository.save(reservation).getId();
     }
 
-    // TODO_w2 : 예약을 취소하는 코드를 작성해주세요.
-    public void cancelReservation(Long id) {
+    public void cancelReservation(Long id, String cancelReason) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
         if(reservation.isEmpty()){
             throw new ReservationException("존재하지 않는 예약입니다.");
         }
+
+        System.out.println("예약 ID: "+id+"취소 (사유: "+cancelReason+")");
 
         reservationRepository.deleteById(id);
     }
