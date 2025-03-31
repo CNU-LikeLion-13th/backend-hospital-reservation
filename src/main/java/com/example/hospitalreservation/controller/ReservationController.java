@@ -45,10 +45,16 @@ public class ReservationController {
     public String createReservation(
             @RequestParam Long doctorId,
             @RequestParam Long patientId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationTime) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationTime,
+            Model model) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
-        reservationService.createReservation(doctorId, patientId, reservationTime);
-        return "redirect:/reservations";
+        try {
+            reservationService.createReservation(doctorId, patientId, reservationTime);
+            return "redirect:/reservations";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "reservation_form"; // 다시 그 페이지 보여줌
+        }
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.

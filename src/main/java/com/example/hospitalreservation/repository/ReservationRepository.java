@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.repository;
 
+import com.example.hospitalreservation.model.Doctor;
 import com.example.hospitalreservation.model.Reservation;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;

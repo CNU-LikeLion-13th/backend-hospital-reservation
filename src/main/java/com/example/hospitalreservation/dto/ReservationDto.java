@@ -15,6 +15,10 @@ public class ReservationDto {
         this.reservationTime = reservationTime;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Long getDoctorId() {
         return doctorId;
     }
