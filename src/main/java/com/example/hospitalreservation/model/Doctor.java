@@ -6,6 +6,8 @@ public class Doctor {
     private Long id;
     private String name;
     private String specialization;
+
+    // 의사 진료 시간
     private final LocalTime CONSULTATION_START_TIME = LocalTime.of(9, 0);
     private final LocalTime CONSULTATION_END_TIME = LocalTime.of(17, 0);
 

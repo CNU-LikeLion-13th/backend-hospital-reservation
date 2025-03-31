@@ -1,5 +1,7 @@
 package com.example.hospitalreservation.model;
 
+import com.example.hospitalreservation.dto.ReservationDto;
+
 import java.time.LocalDateTime;
 
 public class Reservation {
@@ -16,20 +18,11 @@ public class Reservation {
         this.reservationTime = reservationTime;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
-    public Long getDoctorId() {
-        return doctorId;
-    }
-
-
-    public Long getPatientId() {
-        return patientId;
-    }
-
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
+    public ReservationDto getReservationDto() {
+        return new ReservationDto(id, doctorId, patientId, reservationTime);
     }
 }
