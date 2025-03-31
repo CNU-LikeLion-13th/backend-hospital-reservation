@@ -2,11 +2,10 @@ package com.example.hospitalreservation.reservation.presentation.request;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.patient.domain.exception.PatientExceptionCode;
-import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 public record CreateReservationRequest(
@@ -16,8 +15,8 @@ public record CreateReservationRequest(
 ) {
 
     public CreateReservationCommand toCommand() {
-        validateReservationTime(reservationTime);
         validatePositiveId(patientId);
+        validatePastTime(reservationTime);
         return new CreateReservationCommand(doctorId, patientId, reservationTime);
     }
 
@@ -27,17 +26,9 @@ public record CreateReservationRequest(
         }
     }
 
-    private void validateReservationTime(LocalDateTime reservationTime) {
+    private void validatePastTime(LocalDateTime reservationTime) {
         if (!isTimeBeforeNow(reservationTime)) {
             throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_PAST);
-        }
-
-        if (!isWithinBusinessHours(reservationTime.toLocalTime())) {
-            throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
-        }
-
-        if (!isHourlySlot(reservationTime.toLocalTime())) {
-            throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_RANGE);
         }
     }
 
@@ -47,13 +38,5 @@ public record CreateReservationRequest(
 
     private boolean isTimeBeforeNow(LocalDateTime time) {
         return !time.isBefore(LocalDateTime.now());
-    }
-
-    private boolean isWithinBusinessHours(LocalTime time) {
-        return !time.isBefore(LocalTime.of(9, 0)) && !time.isAfter(LocalTime.of(16, 59));
-    }
-
-    private boolean isHourlySlot(LocalTime time) {
-        return time.getMinute() == 0;
     }
 }

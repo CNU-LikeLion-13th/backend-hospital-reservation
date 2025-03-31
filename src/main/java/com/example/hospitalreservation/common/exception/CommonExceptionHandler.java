@@ -12,10 +12,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(value = ApplicationException.class)
     public ResponseEntity<ExceptionResponse> handleApplicationException(ApplicationException exception) {
         ExceptionCode code = exception.getCode();
-        log.info("ApplicationException Occured !! code: {} message: {}".formatted(
-                code.getCode(),
-                code.getMessage()
-        ));
+        log.info("ApplicationException occurred !! code: {} message: {}", code.getCode(), code.getMessage());
         return ResponseEntity
                 .status(code.getHttpStatus())
                 .body(ExceptionResponse.from(code));

@@ -16,12 +16,10 @@ public class ReservationRepository {
     private Long nextId = 1L;
 
     public Reservation findById(Long id) {
-        for (Reservation reservation : reservations) {
-            if (reservation.getId().equals(id)) {
-                return reservation;
-            }
-        }
-        throw new ApplicationException(ReservationExceptionCode.RESERVATION_NOT_FOUND);
+        return reservations.stream()
+                .filter(reservation -> reservation.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ApplicationException(ReservationExceptionCode.RESERVATION_NOT_FOUND));
     }
 
     public List<Reservation> findAll() {
@@ -29,12 +27,8 @@ public class ReservationRepository {
     }
 
     public boolean existsByReservationTime(LocalDateTime reservationTime) {
-        return reservations.stream().anyMatch(reservation -> {
-            LocalDateTime startTime = reservation.getReservationTime();
-            LocalDateTime endTime = startTime.plusHours(1);
-
-            return !reservationTime.isBefore(startTime) && reservationTime.isBefore(endTime);
-        });
+        return reservations.stream()
+                .anyMatch(reservation -> reservation.getReservationTime().equals(reservationTime));
     }
 
     public Reservation save(Reservation reservation) {

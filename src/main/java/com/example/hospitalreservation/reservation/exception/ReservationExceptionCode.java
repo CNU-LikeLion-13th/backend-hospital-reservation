@@ -23,11 +23,6 @@ public enum ReservationExceptionCode implements ExceptionCode {
     }
 
     @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }

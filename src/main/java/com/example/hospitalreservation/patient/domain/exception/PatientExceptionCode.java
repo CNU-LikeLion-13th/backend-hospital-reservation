@@ -19,11 +19,6 @@ public enum PatientExceptionCode implements ExceptionCode {
     }
 
     @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
