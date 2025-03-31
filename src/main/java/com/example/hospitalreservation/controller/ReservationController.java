@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 // TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
@@ -46,10 +47,12 @@ public class ReservationController {
             @RequestParam Long doctorId,
             @RequestParam Long patientId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationTime,
+            RedirectAttributes redirectAttributes,
             Model model) {
         // TODO : 예약을 진행하는 코드를 작성해주세요.
         try {
-            reservationService.createReservation(doctorId, patientId, reservationTime);
+            Reservation reservation = reservationService.createReservation(doctorId, patientId, reservationTime);
+            redirectAttributes.addFlashAttribute("successMessage", "예약이 완료되었습니다. (예약 ID: " + reservation.getId() + ")");
             return "redirect:/reservations";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
