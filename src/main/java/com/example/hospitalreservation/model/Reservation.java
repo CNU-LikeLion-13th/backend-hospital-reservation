@@ -22,6 +22,18 @@ public class Reservation {
         return id;
     }
 
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public LocalDateTime getReservationTime() {
+        return reservationTime;
+    }
+
     public ReservationDto getReservationDto() {
         return new ReservationDto(id, doctorId, patientId, reservationTime);
     }

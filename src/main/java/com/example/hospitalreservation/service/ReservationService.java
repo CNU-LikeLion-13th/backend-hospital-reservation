@@ -38,6 +38,11 @@ public class ReservationService {
         // 의사id 유효성 검증
         Doctor doctor = doctorRepository.findById(doctorId); // 없는 의사 id이면 예외처리
 
+        // 과거시간대로 예약할 수 없음
+        if (reservationTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("현재 시간 이후로만 예약할 수 있습니다.");
+        }
+
         // 진료시간 확인
         if (!doctor.isWithinConsultationTime(reservationTime.toLocalTime())) {
             // 의사 진료 가능 시간은 enum에 저장해놨지만, 결국 진료시간의 진짜 주인은 doctor 객체이기 때문에 doctor객체에서 getter을 통해 가져오기로 함
@@ -45,6 +50,15 @@ public class ReservationService {
                     "의사의 진료 가능 시간(" + doctor.getConsultationStartTime() + " ~ " + doctor.getConsultationEndTime() + ") 내에서만 예약할 수 있습니다."
             );
         }
+
+        // 예약시간 중복 확인, 지금은 의사 1명이지만 여러명일 경우 각 의사에 대해 예약시간이 중복되는지 확인해야함
+        for (Reservation existReservations : reservationRepository.findAll()) {
+            if (existReservations.getDoctorId().equals(doctorId) &&
+                    existReservations.getReservationTime().equals(reservationTime)) {
+                throw new IllegalArgumentException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
+            }
+        }
+
         return reservationRepository.save(doctor.getId(), patientId, reservationTime);
     }
 
