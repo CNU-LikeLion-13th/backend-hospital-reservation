@@ -23,6 +23,10 @@ public class Reservation {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Long getDoctorId() {
         return doctorId;
     }
