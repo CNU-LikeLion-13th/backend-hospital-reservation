@@ -40,7 +40,7 @@ public class ReservationRepository {
                 reservation.getReservationTime()
         );
         reservations.add(toSave);
-        return reservation;
+        return toSave;
     }
 
     public boolean deleteById(Long id) {
