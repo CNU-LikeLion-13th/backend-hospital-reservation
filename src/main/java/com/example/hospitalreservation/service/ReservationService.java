@@ -39,7 +39,13 @@ public class ReservationService {
 
     // TODO : 새로운 예약을 생성하는 코드를 작성해주세요.
     public Reservation createReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        //이해했어. 그럼 실제 있는 의사 id인지 확인한 후에 예약생성하는 로직을 예약repository에 만들기 위해서는 reservationRepository와 doctorRepository가 충돌하므로, 한계층 위인 Service계층에서 reservationCreate메서드 내부에서 검증하는게 맞다
+        //실제 있는 의사 id인지 확인한 후에 예약생성하는 로직을 예약repository에 만들기 위해서는 reservationRepository와 doctorRepository가 충돌하므로, 한계층 위인 Service계층에서 검증하는게 맞음.
+        validateReservation(doctorId, patientId, reservationTime);
+        return reservationRepository.save(doctorId, patientId, reservationTime);
+    }
+
+    // 예약 검증 메서드
+    public void validateReservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         // 의사id 유효성 검증
         Doctor doctor = doctorRepository.findById(doctorId); // 없는 의사 id이면 예외처리
 
@@ -63,8 +69,6 @@ public class ReservationService {
                 throw new IllegalArgumentException("해당 시간에는 이미 예약이 있습니다. 다른 시간을 선택해주세요.");
             }
         }
-
-        return reservationRepository.save(doctor.getId(), patientId, reservationTime);
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
