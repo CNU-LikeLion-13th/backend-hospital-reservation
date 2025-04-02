@@ -25,7 +25,7 @@ public class ReservationController {
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
-    @PostMapping
+    @GetMapping
     public String getReservations(Model model) {
         // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
         model.addAttribute("reservations", reservationService.getAllReservations());
