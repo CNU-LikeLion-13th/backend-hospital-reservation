@@ -17,25 +17,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
-
-
     // TODO : 주입 받아야 할 객체를 설정해주세요. (종속성을 직접 넣어준다...?)
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
+
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
-    }
-
-    @PostMapping
-    public Map<String, Object> addReservation(@RequestBody RequestDTO request) {
-        Map<String, Object> result = new HashMap<>();
-        try{
-            Reservation reservation = reservationService.createReservation(
-                    request.doctorId,
-                    request.patientId,
-                    request.reservationStartTime
-            );
-
-        }
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
@@ -55,10 +41,19 @@ public class ReservationController {
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
-        // TODO : 예약을 진행하는 코드를 작성해주세요.
-        reservationService.createReservation(doctorId, patientId, LocalDateTime.now());
-        return "redirect:/reservations";
+    public Map<String, Object> createReservation(@RequestBody RequestDTO request) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Reservation reservation = request.toReservation(null);
+            reservationService.createReservation(reservation);
+            response.put("reservationId", reservation.id);
+            response.put("message", "예약이 완료되었습니다.");
+        } catch (IllegalArgumentException e) {
+            response.put("error", e.getMessage());
+        }
+
+        return response;
     }
 
     // TODO : 필요한 어노테이션을 작성해주세요.
