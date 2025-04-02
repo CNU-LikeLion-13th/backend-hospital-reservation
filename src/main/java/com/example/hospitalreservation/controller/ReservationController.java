@@ -52,7 +52,6 @@ public class ReservationController {
         } catch (IllegalArgumentException e) {
             response.put("error", e.getMessage());
         }
-
         return response;
     }
 

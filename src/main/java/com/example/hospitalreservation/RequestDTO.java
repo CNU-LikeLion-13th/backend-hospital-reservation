@@ -3,7 +3,7 @@ package com.example.hospitalreservation;
 import com.example.hospitalreservation.model.Reservation;
 import java.time.LocalDateTime;
 
-public class RequestDTO {
+public class RequestDTO { //예약을 생성할 때 값을 옮겨주는 DTO
     private final Long patientId;
     private final Long doctorId;
     private final LocalDateTime reservationStartTime;
