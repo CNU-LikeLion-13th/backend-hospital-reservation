@@ -1,19 +1,24 @@
 package com.example.hospitalreservation.model;
 
+import com.example.hospitalreservation.RequestDTO;
 import java.time.LocalDateTime;
 
-public class Reservation  { //implements TimeEntity
+public class Reservation {
     public Long id;
     public Long doctorId;
     public Long patientId;
     public LocalDateTime reservationTime;
+    public LocalDateTime reservationEndTime;
+    public String reason;
 
-    // TODO : 필요한 메서드가 있다면 작성해주세요.
-    public Reservation(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    public Reservation() {}
+
+    public Reservation(Long id, Long doctorId, Long patientId, LocalDateTime reservationTime, LocalDateTime reservationEndTime, String reason) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.reservationTime = reservationTime;
+        this.reservationEndTime = reservationEndTime;
+        this.reason = reason;
     }
-
 }

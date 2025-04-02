@@ -36,7 +36,7 @@ public class ReservationService {
             }
         }
 
-        return reservationRepository.save(new Reservation(null, doctorId, patientId, reservationTime));
+        return reservationRepository.save(new Reservation(null, doctorId, patientId, reservationTime, reservationEndTime, reason));
     }
 
     // TODO : 예약을 취소하는 코드를 작성해주세요.
