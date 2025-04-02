@@ -9,12 +9,7 @@ import java.util.List;
 
 @Repository
 public class ReservationRepository {
-    private Long id;
-    private Long doctorId;
-    private Long patientId;
-    private LocalDateTime reservationTime;
 
-    Reservation r = new Reservation(id, doctorId, patientId, reservationTime);
     private final List<Reservation> reservations = new ArrayList<>();
     private Long nextId = 1L;
 

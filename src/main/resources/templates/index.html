@@ -1,42 +1,181 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>진료 예약 목록</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>진료 예약 목록</h1>
+<div class="container">
+    <header>
+        <h1>진료 예약 관리 시스템</h1>
+    </header>
 
-<table>
-    <thead>
-    <tr>
-        <th>예약 ID</th>
-        <th>의사 ID</th>
-        <th>환자 ID</th>
-        <th>예약 시간</th>
-        <th>취소</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="reservation : ${reservations}">
-        <td th:text="${reservation.id}"></td>
-        <td th:text="${reservation.doctorId}"></td>
-        <td th:text="${reservation.patientId}"></td>
-        <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
-        <td>
-            <form th:action="@{/reservations/delete/{id}(id=${reservation.id})}" method="post">
-                <label for="cancelReason">취소 사유:</label>
-                <input type="text" id="cancelReason" name="cancelReason" required>
-                <button type="submit">취소</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <div class="card">
+        <div class="card-header">
+            <h2>진료 예약 목록</h2>
+            <a href="/reservations/new" class="btn btn-primary">새 예약 추가</a>
+        </div>
 
-<br>
-<a href="/reservations/new">새 예약 추가</a>
+        <div class="card-body">
+            <table id="reservationTable">
+                <thead>
+                <tr>
+                    <th>예약 ID</th>
+                    <th>의사 ID</th>
+                    <th>환자 ID</th>
+                    <th>시작 시간</th>
+                    <th>종료 시간</th>
+                    <th>예상 금액</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody id="reservationTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <div id="cancellationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>예약 취소</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="cancellationForm">
+                    <input type="hidden" id="cancellationReservationId" name="reservationId">
+                    <div class="form-group">
+                        <label for="cancelReason">취소 사유:</label>
+                        <textarea id="cancelReason" name="cancelReason" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-danger">취소 확인</button>
+                        <button type="button" class="btn btn-secondary close-form">돌아가기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Load all reservations when page loads
+        loadReservations();
+
+        // Close modals when clicking on x or cancel button
+        $(".close-modal, .close-form").click(function() {
+            $(".modal").css("display", "none");
+        });
+
+        // Handle cancellation form submission
+        $("#cancellationForm").submit(function(e) {
+            e.preventDefault();
+
+            const reservationId = $("#cancellationReservationId").val();
+            const cancelReason = $("#cancelReason").val();
+
+            $.ajax({
+                url: "/api/reservations/" + reservationId,
+                type: "DELETE",
+                contentType: "application/json",
+                data: JSON.stringify({ cancelReason: cancelReason }),
+                success: function() {
+                    $("#cancellationModal").css("display", "none");
+                    $("#cancellationForm")[0].reset();
+                    loadReservations();
+                    showNotification("예약이 취소되었습니다.", "success");
+                },
+                error: function(xhr) {
+                    showNotification("예약 취소 실패: " + xhr.responseJSON.message, "error");
+                }
+            });
+        });
+
+        $(window).click(function(e) {
+            if ($(e.target).hasClass("modal")) {
+                $(".modal").css("display", "none");
+            }
+        });
+    });
+
+    function formatDateTime(date) {
+        return date.getFullYear() + '-' +
+            padNumber(date.getMonth() + 1) + '-' +
+            padNumber(date.getDate()) + ' ' +
+            padNumber(date.getHours()) + ':' +
+            padNumber(date.getMinutes());
+    }
+
+    function loadReservations() {
+        $.ajax({
+            url: "/api/reservations",
+            type: "GET",
+            success: function(reservations) {
+                const tableBody = $("#reservationTableBody");
+                tableBody.empty();
+
+                if (reservations.length === 0) {
+                    tableBody.append('<tr><td colspan="5" class="no-data">예약 내역이 없습니다.</td></tr>');
+                    return;
+                }
+
+                reservations.forEach(function(reservation) {
+                    const startTime = new Date(reservation.reservationStartTime);
+                    const endTime = new Date(reservation.reservationEndTime);
+
+                    const formattedStartTime = formatDateTime(startTime);
+                    const formattedEndTime = formatDateTime(endTime);
+
+                    const row = `
+                        <tr>
+                            <td>${reservation.id}</td>
+                            <td>${reservation.doctorId}</td>
+                            <td>${reservation.patientId}</td>
+                            <td>${formattedStartTime}</td>
+                            <td>${formattedEndTime}</td>
+                            <td>${reservation.fee.toLocaleString() ?? "계산 불가"}원</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm cancel-reservation" data-id="${reservation.id}">
+                                    취소
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    tableBody.append(row);
+                });
+
+                $(".cancel-reservation").click(function() {
+                    const reservationId = $(this).data("id");
+                    $("#cancellationReservationId").val(reservationId);
+                    $("#cancellationModal").css("display", "block");
+                });
+            },
+            error: function(xhr) {
+                showNotification("예약 목록을 불러오는데 실패했습니다.", "error");
+            }
+        });
+    }
+
+    // Helper function to pad numbers with leading zero
+    function padNumber(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function showNotification(message, type) {
+        const notification = $("<div>").addClass("notification").addClass(type).text(message);
+        $("body").append(notification);
+
+        setTimeout(function() {
+            notification.fadeOut(function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
+</script>
 </body>
 </html>

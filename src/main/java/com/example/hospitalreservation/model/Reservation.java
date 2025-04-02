@@ -2,7 +2,7 @@ package com.example.hospitalreservation.model;
 
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class Reservation  { //implements TimeEntity
     public Long id;
     public Long doctorId;
     public Long patientId;
@@ -15,6 +15,5 @@ public class Reservation {
         this.patientId = patientId;
         this.reservationTime = reservationTime;
     }
-
 
 }
