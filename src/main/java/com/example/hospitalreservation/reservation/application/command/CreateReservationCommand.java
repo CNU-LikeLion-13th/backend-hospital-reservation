@@ -11,6 +11,9 @@ public record CreateReservationCommand(
 ) {
 
     public Reservation toReservation() {
-        return new Reservation(null, doctorId, patientId, reservationTime);
+        Reservation reservation = new Reservation(null, doctorId, patientId, reservationTime);
+        reservation.validateWithinBusinessHours(reservationTime);
+        reservation.validateHourlySlot(reservationTime);
+        return reservation;
     }
 }
