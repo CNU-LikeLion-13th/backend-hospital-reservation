@@ -1,35 +1,49 @@
 package com.example.hospitalreservation.controller;
 
-import org.springframework.ui.Model;
+import com.example.hospitalreservation.common.ErrorResponse;
+import com.example.hospitalreservation.domain.Reservation;
+import com.example.hospitalreservation.model.*;
+import com.example.hospitalreservation.service.ReservationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// TODO : 컨트롤러에 필요한 어노테이션을 작성해주세요.
-// TODO : 요청 경로는 templates를 참고하여 작성해주세요.
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/reservations")
 public class ReservationController {
 
-    // TODO : 주입 받아야 할 객체를 설정해주세요.
+    private final ReservationService reservationService;
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
-    public String getReservations(Model model) {
-        // TODO : 예약 메인 페이지를 가져오는 코드를 작성해주세요.
-        return null;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
-    public String showReservationForm() {
-        // TODO : 예약하기 페이지를 가져오는 코드를 작성해주세요.
-        return null;
+    @GetMapping
+    public ResponseEntity<?> fetchAllReservations() {
+        List<Reservation> reservations = reservationService.getAllReservations();
+        List<FetchReservationResponse> response = reservations.stream()
+                .map(FetchReservationResponse::from)
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
-    public String createReservation(@RequestParam Long doctorId, @RequestParam Long patientId) {
-        // TODO : 예약을 진행하는 코드를 작성해주세요.
-        return null;
+    @PostMapping
+    public ResponseEntity<CreateReservationResponse> createReservation(@RequestBody CreateReservationRequest dto) {
+        CreateReservationResponse response = reservationService.createReservation(dto);
+        return ResponseEntity.ok(response);
     }
 
-    // TODO : 필요한 어노테이션을 작성해주세요.
-    public String cancelReservation(@PathVariable Long id) {
-        // TODO : 예약을 취소하는 코드를 작성해주세요.
-        return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeleteReservationResponse> cancelReservation
+            (@PathVariable Long id, @RequestBody DeleteReservationRequest request) {
+        DeleteReservationResponse response = reservationService.cancelReservation(id, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(ErrorResponse.of(e.getMessage()));
     }
 }
