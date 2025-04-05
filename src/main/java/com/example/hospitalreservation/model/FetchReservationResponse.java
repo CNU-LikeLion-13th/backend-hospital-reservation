@@ -24,7 +24,7 @@ public class FetchReservationResponse {
         this.fee = fee;
     }
 
-    public static FetchReservationResponse from(Reservation reservation){
+    public static FetchReservationResponse from(Reservation reservation) {
         return new FetchReservationResponse(
                 reservation.getId(),
                 reservation.getDoctorId(),

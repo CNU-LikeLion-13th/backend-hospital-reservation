@@ -13,7 +13,7 @@ public class FetchReservationsResponse {
         this.reservations = reservations;
     }
 
-    public static FetchReservationsResponse from(List<Reservation> reservations){
+    public static FetchReservationsResponse from(List<Reservation> reservations) {
         List<FetchReservationResponse> fetchReservationResponse =
                 reservations.stream()
                         .map(FetchReservationResponse::from)
