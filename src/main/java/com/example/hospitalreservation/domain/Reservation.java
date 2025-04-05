@@ -13,23 +13,26 @@ public class Reservation implements TimeEntity {
     private Long patientId;
     private LocalDateTime reservationStartTime;
     private LocalDateTime reservationEndTime;
-
     private Integer fee;
 
-    private Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
+    private Reservation(Long doctorId,
+                        Long patientId,
+                        LocalDateTime reservationStartTime,
+                        LocalDateTime reservationEndTime,
+                        Integer fee) {
         this.doctorId = doctorId;
         this.patientId = patientId;
+        this.reservationStartTime = reservationStartTime;
+        this.reservationEndTime = reservationEndTime;
+        this.fee = fee;
     }
 
-    public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
-        return new Reservation(doctorId, patientId, reservationTime);
-    }
-
-    public static Reservation from(CreateReservationRequest request) {
-        return new Reservation(
-                request.getDoctorId(),
-                request.getPatientId(),
-                request.getReservationTime());
+    public static Reservation from(CreateReservationRequest dto, Integer fee) {
+        return new Reservation(dto.getDoctorId(),
+                dto.getPatientId(),
+                dto.getReservationStartTime(),
+                dto.getReservationEndTime(),
+                fee);
     }
 
     public Long getId() {
