@@ -22,20 +22,22 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<?> fetchAllReservations() {
         List<Reservation> reservations = reservationService.getAllReservations();
-        FetchReservationsResponse response = FetchReservationsResponse.from(reservations);
+        List<FetchReservationResponse> response = reservations.stream()
+                .map(FetchReservationResponse::from)
+                .toList();
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<CreateReservationResponse> createReservation(@ModelAttribute CreateReservationRequest dto) {
+    public ResponseEntity<CreateReservationResponse> createReservation(@RequestBody CreateReservationRequest dto) {
         CreateReservationResponse response = reservationService.createReservation(dto);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DeleteReservationResponse> cancelReservation
-            (@PathVariable Long id, @ModelAttribute DeleteReservationRequest request) {
+            (@PathVariable Long id, @RequestBody DeleteReservationRequest request) {
         DeleteReservationResponse response = reservationService.cancelReservation(id, request);
         return ResponseEntity.ok(response);
     }
