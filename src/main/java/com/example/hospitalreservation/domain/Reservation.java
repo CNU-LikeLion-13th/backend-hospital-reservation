@@ -11,12 +11,14 @@ public class Reservation implements TimeEntity {
     private Long id;
     private Long doctorId;
     private Long patientId;
-    private LocalDateTime reservationTime;
+    private LocalDateTime reservationStartTime;
+    private LocalDateTime reservationEndTime;
+
+    private Integer fee;
 
     private Reservation(Long doctorId, Long patientId, LocalDateTime reservationTime) {
         this.doctorId = doctorId;
         this.patientId = patientId;
-        this.reservationTime = reservationTime;
     }
 
     public static Reservation of(Long doctorId, Long patientId, LocalDateTime reservationTime) {
@@ -46,17 +48,25 @@ public class Reservation implements TimeEntity {
         return patientId;
     }
 
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
+    public LocalDateTime getReservationStartTime() {
+        return reservationStartTime;
+    }
+
+    public LocalDateTime getReservationEndTime() {
+        return reservationEndTime;
+    }
+
+    public Integer getFee() {
+        return fee;
     }
 
     @Override
     public LocalDateTime getStartTime() {
-        return reservationTime;
+        return getReservationStartTime();
     }
 
     @Override
     public LocalDateTime getEndTime() {
-        return reservationTime.plusHours(RESERVATION_END_HOURS);
+        return getReservationEndTime();
     }
 }
