@@ -48,4 +48,9 @@ public class ReservationService {
             throw new IllegalArgumentException("존재하지 않는 예약입니다.");
         }
     }
+
+    //예약 진료비 계산 코드
+    public int calculateFee(String reason) {
+        return feeCalFactory.calculateFee(reason);
+    }
 }
