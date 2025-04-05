@@ -1,6 +1,6 @@
 package com.example.hospitalreservation.service.treatmentfees;
 
-import com.example.hospitalreservation.enums.Treatments;
+import com.example.hospitalreservation.domain.Treatments;
 import org.springframework.stereotype.Component;
 
 

@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.enums;
+package com.example.hospitalreservation.domain;
 
 import java.util.Arrays;
 
