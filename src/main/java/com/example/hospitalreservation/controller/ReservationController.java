@@ -47,13 +47,17 @@ public class ReservationController {
         try {
             Reservation reservation = request.toReservation(null);
             reservationService.createReservation(reservation);
+            int fee = reservationService.calculateFee(reservation);
+
             response.put("reservationId", reservation.id);
             response.put("message", "예약이 완료되었습니다.");
+            response.put("calculatedFee", fee);
         } catch (IllegalArgumentException e) {
             response.put("error", e.getMessage());
         }
         return response;
     }
+
 
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("/delete/{id}")
@@ -62,4 +66,5 @@ public class ReservationController {
         reservationService.cancelReservation(id, reason);
         return "redirect:/reservations";
     }
+
 }

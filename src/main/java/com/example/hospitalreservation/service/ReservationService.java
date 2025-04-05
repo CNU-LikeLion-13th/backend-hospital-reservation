@@ -50,7 +50,7 @@ public class ReservationService {
     }
 
     //예약 진료비 계산 코드
-    public int calculateFee(String reason) {
-        return feeCalFactory.calculateFee(reason);
+    public int calculateFee(Reservation reservation) {
+        return feeCalFactory.calculateFee(reservation.reason);
     }
 }
