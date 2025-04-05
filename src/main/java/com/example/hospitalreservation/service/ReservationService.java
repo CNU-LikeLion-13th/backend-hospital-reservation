@@ -4,6 +4,8 @@ import com.example.hospitalreservation.common.SuccessMessage;
 import com.example.hospitalreservation.domain.Reservation;
 import com.example.hospitalreservation.model.*;
 import com.example.hospitalreservation.repository.ReservationRepository;
+import com.example.hospitalreservation.service.treatmentfees.TreatmentFeeStrategy;
+import com.example.hospitalreservation.service.treatmentfees.TreatmentsFee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,14 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final TimeTable timeTable;
+    private final TreatmentFeeStrategy treatmentFeeStrategy;
 
-    public ReservationService(ReservationRepository reservationRepository, TimeTable timeTable) {
+    public ReservationService(ReservationRepository reservationRepository,
+                              TimeTable timeTable,
+                              TreatmentFeeStrategy treatmentFeeStrategy) {
         this.reservationRepository = reservationRepository;
         this.timeTable = timeTable;
+        this.treatmentFeeStrategy = treatmentFeeStrategy;
     }
 
     public List<Reservation> getAllReservations() {
@@ -30,12 +36,14 @@ public class ReservationService {
     }
 
     public CreateReservationResponse createReservation(CreateReservationRequest dto) {
-        Reservation reservation = Reservation.from(dto);
+        Integer fee = getFee(dto);
+        Reservation reservation = Reservation.from(dto,fee);
 
         saveReservation(reservation);
 
         return CreateReservationResponse.from(reservation, SuccessMessage.CREATE_RESERVATION);
     }
+
 
     public DeleteReservationResponse cancelReservation(Long id, DeleteReservationRequest dto) {
         deleteReservation(id);
@@ -63,6 +71,13 @@ public class ReservationService {
     private void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
         timeTable.cancelById(id);
+    }
+
+    private Integer getFee(CreateReservationRequest dto) {
+        String reason = dto.getReason();
+        TreatmentsFee treatmentFee = treatmentFeeStrategy.getTreatmentFee(reason);
+
+        return treatmentFee.getFee();
     }
 
     private void checkAvailableTimes(Reservation reservation) {
