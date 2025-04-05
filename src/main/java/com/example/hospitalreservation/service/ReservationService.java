@@ -37,7 +37,7 @@ public class ReservationService {
 
     public CreateReservationResponse createReservation(CreateReservationRequest dto) {
         Integer fee = getFee(dto);
-        Reservation reservation = Reservation.from(dto,fee);
+        Reservation reservation = Reservation.from(dto, fee);
 
         saveReservation(reservation);
 

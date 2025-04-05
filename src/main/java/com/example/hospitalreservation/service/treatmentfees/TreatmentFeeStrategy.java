@@ -20,10 +20,10 @@ public class TreatmentFeeStrategy {
         this.calculateStrategyMap = new ConcurrentHashMap<>();
 
         treatmentsFees.forEach(treatmentFee ->
-                calculateStrategyMap.put(treatmentFee.getTreatment(),treatmentFee));
+                calculateStrategyMap.put(treatmentFee.getTreatment(), treatmentFee));
     }
 
-    public TreatmentsFee getTreatmentFee(String reason){
+    public TreatmentsFee getTreatmentFee(String reason) {
         return calculateStrategyMap.get(Treatments.from(reason));
     }
 }
