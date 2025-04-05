@@ -5,14 +5,12 @@ import com.example.hospitalreservation.domain.Reservation;
 import com.example.hospitalreservation.model.*;
 import com.example.hospitalreservation.service.ReservationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/reservations")
+@RestController
+@RequestMapping("/api/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -22,27 +20,20 @@ public class ReservationController {
     }
 
     @GetMapping
-    public String getReservations(Model model) {
+    public ResponseEntity<?> fetchAllReservations() {
         List<Reservation> reservations = reservationService.getAllReservations();
-        model.addAttribute("reservations", reservations);
+        FetchReservationsResponse response = FetchReservationsResponse.from(reservations);
 
-        return "index.html";
-    }
-
-    @GetMapping("/new")
-    public String showReservationForm() {
-        return "reservation_form.html";
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    @ResponseBody
     public ResponseEntity<CreateReservationResponse> createReservation(@ModelAttribute CreateReservationRequest dto) {
         CreateReservationResponse response = reservationService.createReservation(dto);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/delete/{id}")
-    @ResponseBody
+    @DeleteMapping("/{id}")
     public ResponseEntity<DeleteReservationResponse> cancelReservation
             (@PathVariable Long id, @ModelAttribute DeleteReservationRequest request) {
         DeleteReservationResponse response = reservationService.cancelReservation(id, request);
