@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.service;
 
+import com.example.hospitalreservation.FeeCalFactory;
 import com.example.hospitalreservation.model.Reservation;
 import com.example.hospitalreservation.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ public class ReservationService {
 
     // TODO : 주입 받아야 객체를 작성해주세요
     private final ReservationRepository reservationRepository;
+    private final FeeCalFactory feeCalFactory;
 
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
+        this.feeCalFactory = new FeeCalFactory();
     }
 
     // TODO : 모든 예약 리스트를 조회하는 코드를 작성해주세요.
