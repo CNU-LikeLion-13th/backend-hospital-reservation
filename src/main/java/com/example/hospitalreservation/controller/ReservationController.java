@@ -58,7 +58,6 @@ public class ReservationController {
         return response;
     }
 
-
     // TODO : 필요한 어노테이션을 작성해주세요.
     @PostMapping("/delete/{id}")
     public String cancelReservation(@PathVariable Long id, String reason) {
