@@ -41,7 +41,7 @@ public class ReservationService {
 
         saveReservation(reservation);
 
-        return CreateReservationResponse.from(reservation, SuccessMessage.CREATE_RESERVATION);
+        return CreateReservationResponse.from(reservation, SuccessMessage.CREATE_RESERVATION, fee);
     }
 
 
